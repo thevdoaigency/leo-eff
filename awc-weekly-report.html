@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWC Weekly — Brand & Content Status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F2EE;
+    --panel:#FBFAF7;
+    --ink:#17181A;
+    --ink-soft:#5A5C60;
+    --hair:#DFDDD6;
+    --live:#1F7A4D;
+    --live-bg:#E6F1EA;
+    --prod:#B8791C;
+    --prod-bg:#F6EDDD;
+    --dev:#3D5A80;
+    --dev-bg:#E5EBF1;
+    --block:#B03A2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:56px 32px 80px;}
+
+  /* MASTHEAD */
+  .mast{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--ink);padding-bottom:22px;gap:24px;flex-wrap:wrap;}
+  .mast h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:0.98;letter-spacing:-0.02em;}
+  .mast h1 span{color:var(--ink-soft);}
+  .mast .meta{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);text-align:right;line-height:1.7;}
+  .mast .meta b{color:var(--ink);}
+
+  /* COMPANY INDEX = NAV */
+  .index{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:26px 0 18px;}
+  .idx{text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:border-color .15s,background .15s;}
+  .idx:hover{border-color:var(--ink);background:#fff;}
+  .idx-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:-0.01em;}
+  .idx-counts{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-soft);letter-spacing:0.03em;white-space:nowrap;}
+  .idx-counts b{color:var(--ink);}
+
+  /* STATUS LEGEND */
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 44px;padding-top:4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .sw{width:10px;height:10px;border-radius:2px;flex:none;}
+  .sw.live{background:var(--live);} .sw.prod{background:var(--prod);} .sw.dev{background:var(--dev);}
+
+  /* COMPANY SECTION */
+  .company{margin-bottom:48px;scroll-margin-top:20px;}
+  .company-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:20px;flex-wrap:wrap;}
+  .company-head h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.02em;}
+  .company-head .sub{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-soft);font-weight:400;margin-left:8px;}
+  .tally{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-soft);letter-spacing:0.03em;}
+  .tally b{color:var(--ink);}
+
+  /* LANE LABEL */
+  .lane{display:flex;align-items:center;gap:9px;margin:20px 0 10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-soft);}
+  .lane:first-of-type{margin-top:0;}
+  .dot{width:10px;height:10px;border-radius:50%;flex:none;}
+  .dot.live{background:var(--live);} .dot.prod{background:var(--prod);} .dot.dev{background:var(--dev);}
+
+  /* ITEM */
+  .item{background:var(--panel);border:1px solid var(--hair);border-left:4px solid;border-radius:8px;padding:15px 18px;margin-bottom:10px;}
+  .item.live{border-left-color:var(--live);}
+  .item.prod{border-left-color:var(--prod);}
+  .item.dev{border-left-color:var(--dev);}
+  .item .title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;letter-spacing:-0.01em;margin-bottom:3px;}
+  .item .note{font-size:13.5px;color:var(--ink-soft);}
+  .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle;}
+  .badge.upcoming{background:var(--prod-bg);color:var(--prod);}
+  .badge.blocked{background:#F4E1DF;color:var(--block);}
+  .badge.delivered{background:var(--live-bg);color:var(--live);}
+
+  /* LINKS */
+  .links{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;}
+  .links a{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;text-decoration:none;color:var(--ink);border:1px solid var(--hair);border-radius:6px;padding:5px 11px;display:inline-flex;align-items:center;gap:6px;transition:border-color .15s,background .15s;}
+  .links a:hover{border-color:var(--ink);background:#fff;}
+  .links a .ar{color:var(--ink-soft);font-size:10px;}
+
+  /* CLEVELAND BRIEF */
+  .brief{background:#fff;border:1px solid var(--hair);border-radius:8px;padding:14px 16px;margin-top:10px;font-size:13px;color:var(--ink-soft);}
+  .brief b{color:var(--ink);font-weight:600;}
+  .brief ol{margin:8px 0 0 18px;}
+  .brief li{margin-bottom:3px;}
+
+  .backtop{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-soft);text-decoration:none;}
+  .backtop:hover{color:var(--ink);}
+
+  footer{border-top:2px solid var(--ink);margin-top:24px;padding-top:16px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;}
+
+  @media(max-width:640px){
+    .wrap{padding:36px 18px 60px;}
+    .mast{flex-direction:column;align-items:flex-start;}
+    .mast .meta{text-align:left;} .mast h1{font-size:32px;}
+    .index{grid-template-columns:1fr;}
+    .company-head{gap:6px;}
+    footer{flex-direction:column;gap:6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+
+  <header class="mast">
+    <h1>Brand &amp; Content<br>Weekly<span>.</span></h1>
+    <div class="meta">
+      <b>Alexander West Capital</b><br>
+      Reporting week · 21–27 Jul 2026<br>
+      Prepared by Brandon Cole<br>
+      By portfolio company
+    </div>
+  </header>
+
+  <!-- COMPANY INDEX / JUMP NAV -->
+  <nav class="index">
+    <a class="idx" href="#leopardo-efficiency">
+      <span class="idx-name">Leopardo Efficiency</span>
+      <span class="idx-counts"><b>3</b> pub · <b>4</b> prod · <b>1</b> dev</span>
+    </a>
+    <a class="idx" href="#grand-kahn">
+      <span class="idx-name">Grand Kahn Electric</span>
+      <span class="idx-counts"><b>1</b> prod · <b>1</b> dev</span>
+    </a>
+    <a class="idx" href="#gator">
+      <span class="idx-name">GATOR</span>
+      <span class="idx-counts"><b>1</b> dev</span>
+    </a>
+    <a class="idx" href="#portfolio">
+      <span class="idx-name">Cross-Portfolio</span>
+      <span class="idx-counts"><b>1</b> prod · <b>2</b> dev</span>
+    </a>
+  </nav>
+
+  <div class="legend">
+    <span><i class="sw live"></i>Published</span>
+    <span><i class="sw prod"></i>In Production</span>
+    <span><i class="sw dev"></i>In Development</span>
+  </div>
+
+  <!-- ===================== LEOPARDO EFFICIENCY ===================== -->
+  <section class="company" id="leopardo-efficiency">
+    <div class="company-head">
+      <h2>Leopardo Efficiency</h2>
+      <span class="tally"><b>3</b> published · <b>4</b> in production · <b>1</b> in development</span>
+    </div>
+
+    <div class="lane"><span class="dot live"></span>Published</div>
+
+    <div class="item live">
+      <div class="title">Hammond hero video <span class="badge delivered">YouTube</span></div>
+      <div class="note">1:58 flagship film — Mayor McDermott, Rob Vollrath, Heather Garay and the Hammond ESPC scope. Live on the Leopardo Efficiency channel.</div>
+      <div class="links"><a href="https://youtu.be/wr_QIZtiYbM" target="_blank">Watch <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="item live">
+      <div class="title">Hammond LinkedIn video — posted</div>
+      <div class="note">Native LinkedIn cut, live in-feed.</div>
+      <div class="links"><a href="https://drive.google.com/file/d/1QHbJ5n6Kya1b2SqUfjQkfVlfRzyrovVW/view?usp=sharing" target="_blank">View file <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="item live">
+      <div class="title">Hammond written posts — live page</div>
+      <div class="note">Full written-post set for the 8-week Hammond arc.</div>
+      <div class="links"><a href="https://thevdoaigency.github.io/leopardo-campaign-brief/hammond_written_posts.html" target="_blank">Open page <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="lane"><span class="dot prod"></span>In Production</div>
+
+    <div class="item prod">
+      <div class="title">Hammond asset map — post tracker</div>
+      <div class="note">Remaining posts by week / channel / status across the 24-post Hammond build.</div>
+      <div class="links"><a href="https://thevdoaigency.github.io/leopardo-campaign-brief/hammond_asset_map.html" target="_blank">Open tracker <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="item prod">
+      <div class="title">Hammond LinkedIn video — scheduled <span class="badge upcoming">Queued</span></div>
+      <div class="note">Next native LinkedIn cut, staged for release.</div>
+      <div class="links"><a href="https://drive.google.com/file/d/1KmUhGrC2N4DoRtvkI6krcXJ6US0QO-_0/view?usp=sharing" target="_blank">View file <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="item prod">
+      <div class="title">Cleveland Police Station pitch reel <span class="badge delivered">Delivered</span></div>
+      <div class="note">Proof reel from the five completed police-station upgrades — the persuasion asset behind the Cleveland fire-station close.</div>
+      <div class="links"><a href="https://drive.google.com/file/d/1ZIw0DrvhmqL9pyteRHhgT_edqPXSTDmq/view?usp=sharing" target="_blank">View reel <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="item prod">
+      <div class="title">Cleveland shoot — 5 police stations <span class="badge upcoming">Tue 28 Jul</span></div>
+      <div class="note">One-camera shoot to turn finished-work b-roll into a persuasion piece for a room of Cleveland city officials.</div>
+      <div class="brief">
+        <b>The play.</b> Rob is closing a City of Cleveland fire-station deal — 20+ buildings, $30–60M. The five finished police stations are the proof; this shoot decides where in that range Cleveland writes the check. Audience is officials, not social — every frame answers one of three questions the city is silently asking.<br>
+        <b>Crew.</b> Camera: Cody LaRosa · On camera: Gio Luciano, Justin Jezierski.<br>
+        <b>Priorities carried from the Rob / PM call:</b>
+        <ol>
+          <li>Put faces on the police-station work — talking heads that vouch, not just b-roll.</li>
+          <li>Capture fire-station "before" footage now, before anything's signed — the baseline has an expiration date.</li>
+          <li>Solve the official-on-camera problem structurally, and bake the fix into the Cleveland agreement.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="lane"><span class="dot dev"></span>In Development</div>
+
+    <div class="item dev">
+      <div class="title">Website content refresh <span class="badge upcoming">Working session · 5 Aug</span></div>
+      <div class="note">Round of site content updates with Rob &amp; Curtis. Cleveland is the centerpiece proof point — completed Public Safety work, guaranteed + projected savings, local jobs &amp; economic impact, and strong MBE / FBE / CSB participation. Agenda built around what's needed to move fast.</div>
+    </div>
+
+    <div style="margin-top:16px"><a class="backtop" href="#top">↑ Back to top</a></div>
+  </section>
+
+  <!-- ===================== GRAND KAHN ELECTRIC ===================== -->
+  <section class="company" id="grand-kahn">
+    <div class="company-head">
+      <h2>Grand Kahn Electric</h2>
+      <span class="tally"><b>1</b> in production · <b>1</b> in development</span>
+    </div>
+
+    <div class="lane"><span class="dot prod"></span>In Production</div>
+
+    <div class="item prod">
+      <div class="title">EV solar-canopy install — sample reel <span class="badge delivered">Delivered</span></div>
+      <div class="note">Reel from the recent EV solar-canopy install — anchors the EV / renewables growth lane.</div>
+      <div class="links"><a href="https://drive.google.com/file/d/1ZNr4xSrCQOsfmKa7Pk3xN7sILpNs2-em/view?usp=sharing" target="_blank">View reel <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="lane"><span class="dot dev"></span>In Development</div>
+
+    <div class="item dev">
+      <div class="title">EV blog pilot: "The Parking Code Just Changed" <span class="badge blocked">Blocked</span></div>
+      <div class="note">WordPress-ready HTML + mockup complete. Publish held pending a legal / compliance check on the Illinois parking-mandate claim. Preview is internal review only — not live on the Grand Kahn site.</div>
+      <div class="links"><a href="https://thevdoaigency.github.io/grand-kahn/grand-kahn-ev-post-preview-mockup.html" target="_blank">Preview <span class="ar">↗</span></a></div>
+    </div>
+
+    <div style="margin-top:16px"><a class="backtop" href="#top">↑ Back to top</a></div>
+  </section>
+
+  <!-- ===================== GATOR ===================== -->
+  <section class="company" id="gator">
+    <div class="company-head">
+      <h2>GATOR <span class="sub">AWC Technology</span></h2>
+      <span class="tally"><b>1</b> in development</span>
+    </div>
+
+    <div class="lane"><span class="dot dev"></span>In Development</div>
+
+    <div class="item dev">
+      <div class="title">Internal sourcing assistant UI</div>
+      <div class="note">Live demo interface (light + dark mode), SharePoint connected; LLM returns fixed answers for now. Open question: assistant name — "GatorGPT" vs "Snappy." Feedback requested from Rob &amp; Curtis on the assistant feature. Pending sync call with Jack (developer) to hand off deployable UX design.</div>
+      <div class="links">
+        <a href="https://thevdoaigency.github.io/gator/" target="_blank">Demo <span class="ar">↗</span></a>
+        <a href="https://thevdoaigency.github.io/gator/dark_mode.html" target="_blank">Dark mode <span class="ar">↗</span></a>
+      </div>
+    </div>
+
+    <div style="margin-top:16px"><a class="backtop" href="#top">↑ Back to top</a></div>
+  </section>
+
+  <!-- ===================== CROSS-PORTFOLIO ===================== -->
+  <section class="company" id="portfolio">
+    <div class="company-head">
+      <h2>Cross-Portfolio</h2>
+      <span class="tally"><b>1</b> in production · <b>2</b> in development</span>
+    </div>
+
+    <div class="lane"><span class="dot prod"></span>In Production</div>
+
+    <div class="item prod">
+      <div class="title">President's Meeting interview — sample reel <span class="badge delivered">Delivered</span></div>
+      <div class="note">Cut sample reel from the executive interviews for the AWC Presidents' Meeting.</div>
+      <div class="links"><a href="https://drive.google.com/file/d/15vFbK-6XX149x0k_dC3s0DjGz_vWyaAz/view?usp=sharing" target="_blank">View reel <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="lane"><span class="dot dev"></span>In Development</div>
+
+    <div class="item dev">
+      <div class="title">Executive thought-leadership — onboard Rob &amp; Mike Casto</div>
+      <div class="note">Extend the "thought leader" LinkedIn treatment we already run on Curtis's profile to Rob Vollrath (Leopardo Efficiency) and Mike Casto (Grand Kahn). Two ways in — they hand over posting access, or they post the drafts themselves. Curtis's profile is the proof of concept; let's onboard the next two soon.</div>
+      <div class="links"><a href="https://www.linkedin.com/in/curtis-l-33b8423a/" target="_blank">Curtis — proof of concept <span class="ar">↗</span></a></div>
+    </div>
+
+    <div class="item dev">
+      <div class="title">Searchable asset library → R2 upload</div>
+      <div class="note">Portfolio-wide searchable assets staged and ready for Cloudflare R2; Librarian agent running isolated on the GX10.</div>
+    </div>
+
+    <div style="margin-top:16px"><a class="backtop" href="#top">↑ Back to top</a></div>
+  </section>
+
+  <footer>
+    <span>VDO Aigency</span>
+    <span>27 July 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
