@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Working Session — Cleveland Public Safety Content</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101A26;
+    --slate:#2A3B4D;
+    --steel:#5B6B7A;
+    --paper:#EEF0F0;
+    --card:#FBFBFA;
+    --line:#D6DBDB;
+    --line-strong:#C0C7C7;
+    --gold:#B8842A;
+    --gold-soft:#F0E4C8;
+    --verify:#2E6E52;
+    --display:"Archivo",system-ui,sans-serif;
+    --body:"Inter",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:920px;
+    margin:0 auto;
+    padding:44px 40px 64px;
+  }
+
+  /* ---------- Masthead ---------- */
+  .mast{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:22px;
+  }
+  .mast-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5vw,46px);
+    line-height:1.02;
+    letter-spacing:-.015em;
+    margin:0;
+    max-width:16ch;
+  }
+  .brandmark{
+    text-align:right;
+    font-family:var(--mono);
+    font-size:11px;
+    line-height:1.7;
+    color:var(--steel);
+    letter-spacing:.02em;
+    white-space:nowrap;
+  }
+  .brandmark strong{
+    display:block;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0;
+    color:var(--ink);
+    text-transform:none;
+  }
+  .brandmark .x{color:var(--gold);padding:0 4px;}
+
+  /* ---------- Meta bar ---------- */
+  .meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:22px;
+  }
+  .meta > div{
+    background:var(--card);
+    padding:14px 16px;
+  }
+  .meta .lbl{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--steel);
+    margin-bottom:5px;
+  }
+  .meta .val{font-weight:600;font-size:14px;}
+  .fill{
+    color:var(--gold);
+    background:var(--gold-soft);
+    padding:1px 6px;
+    border-radius:2px;
+    font-family:var(--mono);
+    font-size:.86em;
+    font-weight:500;
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section{margin-top:40px;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    border-bottom:1px solid var(--line-strong);
+    padding-bottom:8px;
+    margin-bottom:18px;
+  }
+  .sec-num{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:12px;
+    color:var(--gold);
+    letter-spacing:.05em;
+  }
+  .sec-head h2{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-.01em;
+    margin:0;
+    flex:1;
+  }
+  .sec-head .aside{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--steel);
+    letter-spacing:.04em;
+  }
+  p.lead{
+    font-size:15.5px;
+    color:var(--slate);
+    max-width:66ch;
+    margin:0 0 4px;
+  }
+
+  /* ---------- Attendees ---------- */
+  .roster{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+  .person{
+    border:1px solid var(--line);
+    background:var(--card);
+    border-left:3px solid var(--gold);
+    padding:13px 15px;
+  }
+  .person .nm{font-family:var(--display);font-weight:700;font-size:15px;}
+  .person .rl{font-size:13px;color:var(--steel);margin-top:2px;}
+  .person.host{border-left-color:var(--ink);}
+  .tag{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    display:inline-block;
+    margin-top:8px;
+  }
+  .person.host .tag{color:var(--ink);}
+
+  /* ---------- Agenda timeline ---------- */
+  .flow{border-top:1px solid var(--line);}
+  .block{
+    display:grid;
+    grid-template-columns:74px 1fr;
+    gap:20px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .block .time{
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink);
+    padding-top:2px;
+  }
+  .block .time span{display:block;color:var(--steel);font-weight:400;font-size:10.5px;margin-top:3px;}
+  .block h3{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:15.5px;
+    margin:0 0 5px;
+  }
+  .block p{margin:0;font-size:13.5px;color:var(--slate);max-width:62ch;}
+  .block .owner{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.05em;
+    color:var(--gold);
+    margin-top:7px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Video slate ---------- */
+  .slate{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+  }
+  .hero-card{
+    background:var(--ink);
+    color:#EAEEF0;
+    padding:18px 16px 16px;
+    display:flex;
+    flex-direction:column;
+    min-height:172px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(184,132,42,.20), transparent 55%);
+    pointer-events:none;
+  }
+  .hero-card .hid{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.12em;
+    color:var(--gold);
+    position:relative;
+  }
+  .hero-card .htitle{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:16px;
+    line-height:1.12;
+    margin:9px 0 8px;
+    position:relative;
+  }
+  .hero-card .hdesc{font-size:12px;color:#AEBBC4;position:relative;flex:1;}
+  .hero-card .hrun{
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:#8FA0AC;
+    margin-top:10px;
+    position:relative;
+    padding-top:9px;
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .cut-strip{
+    margin-top:14px;
+    border:1px solid var(--line);
+    background:var(--card);
+    padding:14px 16px;
+  }
+  .cut-strip .ct{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--steel);
+    margin-bottom:10px;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:var(--mono);
+    font-size:11px;
+    border:1px solid var(--line-strong);
+    padding:5px 10px;
+    background:#fff;
+    color:var(--slate);
+  }
+  .chip b{color:var(--gold);font-weight:600;}
+
+  /* ---------- Proof / confirm ---------- */
+  .confirm{
+    border:1px solid var(--line);
+    background:var(--card);
+  }
+  .confirm .row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:16px;
+    align-items:center;
+    padding:12px 16px;
+    border-bottom:1px solid var(--line);
+  }
+  .confirm .row:last-child{border-bottom:0;}
+  .confirm .q{font-size:13.5px;}
+  .confirm .q b{font-weight:600;}
+  .confirm .status{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--gold);
+    white-space:nowrap;
+  }
+  .confirm .status.open{color:var(--slate);}
+
+  /* ---------- Deliverables ---------- */
+  .deliver{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+  .del{
+    border:1px solid var(--line);
+    background:var(--card);
+    padding:14px 16px;
+  }
+  .del .dt{font-family:var(--display);font-weight:600;font-size:14px;margin-bottom:3px;}
+  .del .dm{font-size:12.5px;color:var(--slate);}
+  .del .own{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-top:9px;
+  }
+
+  /* ---------- Windows / footer ---------- */
+  .windows{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:6px;
+  }
+  .win{
+    border:1px dashed var(--line-strong);
+    padding:16px;
+    text-align:center;
+    background:var(--card);
+  }
+  .win .wn{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);}
+  .win .wv{margin-top:8px;font-weight:600;font-size:14px;color:var(--gold);font-family:var(--mono);}
+  footer{
+    margin-top:48px;
+    padding-top:18px;
+    border-top:2px solid var(--ink);
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.04em;
+    color:var(--steel);
+  }
+  footer b{color:var(--ink);}
+
+  a{color:var(--gold);}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  @media (max-width:680px){
+    .sheet{padding:28px 20px 44px;}
+    .meta,.slate,.roster,.deliver,.windows{grid-template-columns:1fr;}
+    .block{grid-template-columns:1fr;gap:6px;}
+    .block .time span{display:inline;margin-left:6px;}
+    .brandmark{text-align:left;}
+  }
+  @media print{
+    body{background:#fff;}
+    .sheet{max-width:none;padding:0 12px;}
+    .hero-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    section{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <div class="mast-top">
+      <div>
+        <p class="kicker">Working Session · Website Content Round</p>
+        <h1>Cleveland Public Safety, on the record.</h1>
+      </div>
+      <div class="brandmark">
+        <strong>Leopardo Efficiency<span class="x">×</span>The VDO Aigency</strong>
+        Content production &amp; site build
+      </div>
+    </div>
+
+    <div class="meta">
+      <div>
+        <div class="lbl">Format</div>
+        <div class="val">Virtual · 60 min</div>
+      </div>
+      <div>
+        <div class="lbl">Date / Time</div>
+        <div class="val">August 5, 2026 · <span class="fill">time TBC</span></div>
+      </div>
+      <div>
+        <div class="lbl">Objective</div>
+        <div class="val">Lock content + site scope</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- WHY WE'RE MEETING -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2>Why we're meeting</h2>
+    </div>
+    <p class="lead">Leopardo has a marquee body of work in Cleveland — completed Public Safety facilities, guaranteed and projected savings, real local economic impact, and strong MBE / FBE / CSB participation. This session locks the story the site tells and the video that carries it, so production and the site build move in one pass instead of three.</p>
+    <p class="lead" style="margin-top:10px;">This agenda is built the way Rob framed it: <b>around what The VDO Aigency needs from Leopardo to move quickly.</b> Every block below ends in a decision or a hand-off.</p>
+  </section>
+
+  <!-- ATTENDEES -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>In the room</h2>
+      <span class="aside">3 in the room</span>
+    </div>
+    <div class="roster">
+      <div class="person">
+        <div class="nm">Curtis Leopardo</div>
+        <div class="rl">CEO, Leopardo Efficiency — owns direction &amp; the Cleveland narrative</div>
+        <span class="tag">Approver</span>
+      </div>
+      <div class="person host">
+        <div class="nm">Brandon David Cole</div>
+        <div class="rl">The VDO Aigency — marketing content &amp; production; facilitator</div>
+        <span class="tag">Producer / Content</span>
+      </div>
+      <div class="person">
+        <div class="nm">Web Development Team</div>
+        <div class="rl">leopardoefficiency.com — build, CMS &amp; publishing</div>
+        <span class="tag">Site build</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDA FLOW -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>Run of show</h2>
+      <span class="aside">60 min</span>
+    </div>
+    <div class="flow">
+      <div class="block">
+        <div class="time">0:00<span>5 min</span></div>
+        <div>
+          <h3>Frame &amp; outcomes</h3>
+          <p>The one thing we leave with: a signed-off Cleveland story, a locked video slate, and a case-study page scoped for the web team.</p>
+          <div class="owner">Lead · The VDO Aigency</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="time">0:05<span>12 min</span></div>
+        <div>
+          <h3>The Cleveland narrative — position &amp; proof</h3>
+          <p>Agree the framing: Leopardo is who cities call when police or fire facilities need an update or new construction, with the completed stations as proof. Confirm the four proof pillars: completed Public Safety work, guaranteed &amp; projected savings, local jobs &amp; economic impact, MBE / FBE / CSB participation.</p>
+          <div class="owner">Decision · Curtis</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="time">0:17<span>15 min</span></div>
+        <div>
+          <h3>Hero video slate — walk the three cuts</h3>
+          <p>Review the three hero pieces below and sign off on angle, on-camera voices, and any subjects or figures flagged as not-for-use. Confirm what's cleared from the Cleveland shoot and interview footage.</p>
+          <div class="owner">Review · all · approve Curtis</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="time">0:32<span>13 min</span></div>
+        <div>
+          <h3>Case-study page — scope with the web team</h3>
+          <p>Walk the mockup section by section. Confirm where it lives on leopardoefficiency.com, CMS structure, video hosting/embeds, and who publishes. Agree the figures that go live vs. stay bracketed until confirmed.</p>
+          <div class="owner">Scope · Web team + The VDO Aigency</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="time">0:45<span>10 min</span></div>
+        <div>
+          <h3>Cutdowns &amp; distribution</h3>
+          <p>Confirm the social/LinkedIn cutdown set from the heroes and the publishing cadence around the site launch.</p>
+          <div class="owner">Plan · The VDO Aigency</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="time">0:55<span>5 min</span></div>
+        <div>
+          <h3>Decisions, owners, dates</h3>
+          <p>Read back every open item below with a name and a date attached. Nothing leaves the call unassigned.</p>
+          <div class="owner">Close · The VDO Aigency</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO SLATE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>Hero video slate</h2>
+      <span class="aside">3 heroes → cutdowns</span>
+    </div>
+    <div class="slate">
+      <div class="hero-card">
+        <div class="hid">HERO 01</div>
+        <div class="htitle">Promise Kept: Cleveland Public&nbsp;Safety</div>
+        <div class="hdesc">The flagship. The stations Cleveland committed to, built and delivered — Rob and Heather on why the completed work is the reference every future project points back to.</div>
+        <div class="hrun">≈ 2:30 · anchor / hero embed</div>
+      </div>
+      <div class="hero-card">
+        <div class="hid">HERO 02</div>
+        <div class="htitle">On the Ground</div>
+        <div class="hdesc">Gio and Justin to camera: union and local labor — Cleveland Building Trades, jobs kept local, on time and under budget — and work built to last ("what's still standing in twenty years"). The operators' proof behind the fire station.</div>
+        <div class="hrun">≈ 2:00 · PM interviews</div>
+      </div>
+      <div class="hero-card">
+        <div class="hid">HERO 03</div>
+        <div class="htitle">What Cleveland Kept Local</div>
+        <div class="hdesc">The economic story: jobs, guaranteed savings, and MBE / FBE / CSB participation — impact that stayed in the city.</div>
+        <div class="hrun">≈ 1:45 · impact / community</div>
+      </div>
+    </div>
+    <div class="cut-strip">
+      <div class="ct">Cutdowns from the heroes</div>
+      <div class="chips">
+        <span class="chip"><b>:60</b> LinkedIn — flagship teaser</span>
+        <span class="chip"><b>:30</b> Guaranteed savings, data cut</span>
+        <span class="chip"><b>:15</b> ×3 vertical — one per pillar</span>
+        <span class="chip"><b>:06</b> stat bumpers</span>
+        <span class="chip"><b>stills</b> quote cards for social</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE NEED / CONFIRM -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>What we need from Leopardo to move</h2>
+      <span class="aside">bring answers to the call</span>
+    </div>
+    <div class="confirm">
+      <div class="row">
+        <div class="q"><b>Rob &amp; Heather on camera</b> — book the two sit-downs; the <a href="cleveland-interview-guide-rob-heather.html">interview guide</a> is ready to shoot from.</div>
+        <div class="status open">schedule</div>
+      </div>
+      <div class="row">
+        <div class="q"><b>Guaranteed &amp; projected savings</b> — final figures cleared for public use, and which are guaranteed vs. projected.</div>
+        <div class="status open">need numbers</div>
+      </div>
+      <div class="row">
+        <div class="q"><b>Jobs &amp; economic impact</b> — local job count and economic-impact figure we can put on the page.</div>
+        <div class="status open">need numbers</div>
+      </div>
+      <div class="row">
+        <div class="q"><b>MBE / FBE / CSB participation</b> — confirmed percentages or the source we cite them from.</div>
+        <div class="status open">need numbers</div>
+      </div>
+      <div class="row">
+        <div class="q"><b>Interview clearances</b> — any subject or figure flagged not-for-use before we cut.</div>
+        <div class="status">approve</div>
+      </div>
+      <div class="row">
+        <div class="q"><b>Legal name</b> — confirm the exact legal entity name for on-page and credits.</div>
+        <div class="status">confirm</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERABLES -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>Leave the call as</h2>
+    </div>
+    <div class="deliver">
+      <div class="del">
+        <div class="dt">Signed-off Cleveland story</div>
+        <div class="dm">Positioning + four proof pillars, approved for site &amp; video.</div>
+        <div class="own">Owner · Curtis</div>
+      </div>
+      <div class="del">
+        <div class="dt">Locked hero slate</div>
+        <div class="dm">Three heroes greenlit; cutdown set confirmed.</div>
+        <div class="own">Owner · The VDO Aigency</div>
+      </div>
+      <div class="del">
+        <div class="dt">Scoped case-study page</div>
+        <div class="dm">Placement, CMS &amp; video hosting agreed with web team. <a href="cleveland-case-study-page.html">View the mockup →</a></div>
+        <div class="own">Owner · Web team</div>
+      </div>
+      <div class="del">
+        <div class="dt">Cleared figures list</div>
+        <div class="dm">Every bracketed number resolved or dated.</div>
+        <div class="own">Owner · Curtis / Leopardo</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Prepared by <b>The VDO Aigency</b> for Leopardo Efficiency</span>
+    <span>Cleveland Public Safety · Website Content Round</span>
+  </footer>
+
+</div>
+</body>
+</html>
