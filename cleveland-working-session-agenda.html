@@ -86,6 +86,10 @@
     letter-spacing:0;
     color:var(--ink);
     text-transform:none;
+    white-space:normal;
+    max-width:30ch;
+    margin-left:auto;
+    line-height:1.35;
   }
   .brandmark .x{color:var(--gold);padding:0 4px;}
 
@@ -162,7 +166,7 @@
   /* ---------- Attendees ---------- */
   .roster{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
   }
   .person{
@@ -185,6 +189,21 @@
     margin-top:8px;
   }
   .person.host .tag{color:var(--ink);}
+  .org{
+    border:1px solid var(--line);
+    background:var(--card);
+    border-top:3px solid var(--gold);
+    padding:15px 16px 12px;
+  }
+  .org.host{border-top-color:var(--ink);}
+  .org-name{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:-.01em;}
+  .org-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:3px;margin-bottom:11px;}
+  .people{list-style:none;margin:0;padding:0;}
+  .people li{padding:8px 0;border-top:1px solid var(--line);font-size:14px;color:var(--ink);}
+  .people li:first-child{border-top:0;padding-top:2px;}
+  .people li b{font-weight:600;}
+  .people li .role{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-top:3px;}
+  .org.host .people li .role{color:var(--ink);}
 
   /* ---------- Agenda timeline ---------- */
   .flow{border-top:1px solid var(--line);}
@@ -401,8 +420,8 @@
         <h1>Cleveland Public Safety, on the record.</h1>
       </div>
       <div class="brandmark">
-        <strong>Leopardo Efficiency<span class="x">×</span>The VDO Aigency</strong>
-        Content production &amp; site build
+        <strong>The VDO Aigency<span class="x">×</span>Nova Creative<span class="x">×</span>Leopardo Efficiency</strong>
+        Content · site build · publishing
       </div>
     </div>
 
@@ -436,24 +455,34 @@
   <section>
     <div class="sec-head">
       <span class="sec-num">01</span>
-      <h2>In the room</h2>
-      <span class="aside">3 in the room</span>
+      <h2>On the call</h2>
+      <span class="aside">7 · three teams</span>
     </div>
     <div class="roster">
-      <div class="person">
-        <div class="nm">Curtis Leopardo</div>
-        <div class="rl">CEO, Leopardo Efficiency — owns direction &amp; the Cleveland narrative</div>
-        <span class="tag">Approver</span>
+      <div class="org host">
+        <div class="org-name">The VDO Aigency</div>
+        <div class="org-tag">Content &amp; production</div>
+        <ul class="people">
+          <li><b>Brandon David Cole</b><span class="role">Producer / content · facilitator</span></li>
+          <li><b>Raj Brahmbhatt</b></li>
+        </ul>
       </div>
-      <div class="person host">
-        <div class="nm">Brandon David Cole</div>
-        <div class="rl">The VDO Aigency — marketing content &amp; production; facilitator</div>
-        <span class="tag">Producer / Content</span>
+      <div class="org">
+        <div class="org-name">Nova Creative</div>
+        <div class="org-tag">Web build &amp; publishing</div>
+        <ul class="people">
+          <li><b>Brandon Eifert</b><span class="role">Project manager</span></li>
+          <li><b>Malorie Horvath</b></li>
+          <li><b>Betsy Nottoli</b></li>
+        </ul>
       </div>
-      <div class="person">
-        <div class="nm">Web Development Team</div>
-        <div class="rl">leopardoefficiency.com — build, CMS &amp; publishing</div>
-        <span class="tag">Site build</span>
+      <div class="org">
+        <div class="org-name">Leopardo Efficiency</div>
+        <div class="org-tag">Client · approver</div>
+        <ul class="people">
+          <li><b>Curtis Leopardo</b><span class="role">CEO</span></li>
+          <li><b>Kyle Parham</b></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -470,7 +499,7 @@
         <div class="time">0:00<span>5 min</span></div>
         <div>
           <h3>Frame &amp; outcomes</h3>
-          <p>The one thing we leave with: a signed-off Cleveland story, a locked video slate, and a case-study page scoped for the web team.</p>
+          <p>The one thing we leave with: a signed-off Cleveland story, a locked video slate, and a case-study page scoped for Nova Creative.</p>
           <div class="owner">Lead · The VDO Aigency</div>
         </div>
       </div>
@@ -493,9 +522,9 @@
       <div class="block">
         <div class="time">0:32<span>13 min</span></div>
         <div>
-          <h3>Case-study page — scope with the web team</h3>
+          <h3>Case-study page — scope with Nova Creative</h3>
           <p>Walk the mockup section by section. Confirm where it lives on leopardoefficiency.com, CMS structure, video hosting/embeds, and who publishes. Agree the figures that go live vs. stay bracketed until confirmed.</p>
-          <div class="owner">Scope · Web team + The VDO Aigency</div>
+          <div class="owner">Scope · Nova Creative + The VDO Aigency</div>
         </div>
       </div>
       <div class="block">
@@ -610,8 +639,8 @@
       </div>
       <div class="del">
         <div class="dt">Scoped case-study page</div>
-        <div class="dm">Placement, CMS &amp; video hosting agreed with web team. <a href="cleveland-case-study-page.html">View the mockup →</a></div>
-        <div class="own">Owner · Web team</div>
+        <div class="dm">Placement, CMS &amp; video hosting agreed with Nova Creative. <a href="cleveland-case-study-page.html">View the mockup →</a></div>
+        <div class="own">Owner · Nova Creative</div>
       </div>
       <div class="del">
         <div class="dt">Cleared figures list</div>
