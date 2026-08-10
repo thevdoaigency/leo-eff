@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scout → Monday Writer</title>
+<style>
+  :root{
+    --navy:#1A3868; --red:#ED1C24; --yellow:#FFE600;
+    --ink:#0f1b2d; --muted:#5b6b82; --line:#e2e8f2; --bg:#f5f7fb; --card:#ffffff;
+    --ok:#1a7f4b; --skip:#8a6d1f; --err:#b3261e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+  .wrap{max-width:940px;margin:0 auto;padding:22px 18px 60px}
+  header{border-left:5px solid var(--red);padding:4px 0 4px 14px;margin-bottom:6px}
+  h1{font-family:"Archivo",Inter,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.01em;margin:0;color:var(--navy)}
+  .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
+  .board{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--navy);background:#eef2f9;padding:1px 6px;border-radius:4px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+  button{font:inherit;font-weight:600;font-size:13.5px;border:0;border-radius:8px;padding:10px 16px;cursor:pointer;transition:transform .05s,opacity .15s}
+  button:active{transform:translateY(1px)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .b1{background:var(--navy);color:#fff}
+  .b2{background:var(--red);color:#fff}
+  .ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+  .console{background:#0f1b2d;color:#cfe0f5;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;border-radius:10px;padding:12px 14px;margin-top:14px;min-height:44px;white-space:pre-wrap;word-break:break-word}
+  .console .ok{color:#7ee2a8}.console .skip{color:#ffd95e}.console .err{color:#ff9b93}.console .dim{color:#7f93b0}
+  .grid{display:grid;gap:10px;margin-top:16px}
+  .item{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:10px;padding:12px 14px}
+  .item.dup{border-left-color:#c9ad3a;opacity:.7}
+  .item.done{border-left-color:var(--ok)}
+  .item.fail{border-left-color:var(--err)}
+  .item h3{margin:0 0 2px;font-size:14.5px;color:var(--ink)}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2f9;color:var(--navy)}
+  .tag.sig-Warm{background:#fff3d6;color:#8a6d1f}
+  .tag.sig-Hot{background:#fde0de;color:#b3261e}
+  .tag.sig-Watch{background:#eef2f9;color:#5b6b82}
+  .why{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .st{font-size:11.5px;font-weight:700;margin-top:8px}
+  .st.q{color:var(--muted)}.st.d{color:var(--ok)}.st.s{color:var(--skip)}.st.f{color:var(--err)}
+  .foot{margin-top:22px;font-size:12px;color:var(--muted)}
+  a{color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Scout → Monday Writer</h1>
+    <div class="sub">Leopardo Eff Intake &nbsp;·&nbsp; board <span class="board">18418779203</span> &nbsp;·&nbsp; Florida run, police/fire facilities</div>
+  </header>
+
+  <div class="bar">
+    <button class="b1" id="readBtn" onclick="phaseRead()">1 · Read board &amp; dedup</button>
+    <button class="b2" id="writeBtn" onclick="phaseWrite()" disabled>2 · Write new items to FOR REVIEW</button>
+    <button class="ghost" onclick="resetRun()">Reset</button>
+  </div>
+
+  <div class="console" id="log"><span class="dim">Idle. Step 1 reads existing items + column IDs, then dedups against these 7 candidates. Nothing is written until step 2.</span></div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">
+    Writer talks to your connected monday.com MCP (<span class="board">mcp.monday.com</span>) through the Anthropic API. Duplicate check = same Link, or same Jurisdiction + Opportunity. New items land in the <b>FOR REVIEW</b> group with Found Date = today.
+  </div>
+</div>
+
+<script>
+const BOARD_ID = "18418779203";
+const TODAY = new Date().toISOString().slice(0,10);
+
+// ---- The 7 qualified candidates from the Florida run ----
+const ITEMS = [
+  { name:"Miami — new police HQ + citywide fire-station repairs ($450M bond stalled)",
+    serviceLine:"Police/Fire", type:"Trigger", jurisdiction:"Miami, FL", state:"FL",
+    signal:"Warm", source:"WLRN", link:"https://www.wlrn.org/government-politics/2026-05-14/miami-mayor-bond-fire-stations-safety",
+    deadline:"", value:"~$450M bond",
+    why:"Mayor's $450M bond to replace the police HQ and repair mold/exhaust-plagued fire stations was deferred off the Aug ballot; city is hunting for a funding path (may reach Nov 2026). Source dated May 14 2026. Unverified — confirm current holders (Mayor Eileen Higgins; MPD Chief Manny Morales)." },
+  { name:"Boca Raton — new police headquarters ($175M bond rejected)",
+    serviceLine:"Police/Fire", type:"Trigger", jurisdiction:"Boca Raton, FL", state:"FL",
+    signal:"Warm", source:"FL Voice News", link:"https://flvoicenews.com/boca-raton-voters-resoundingly-reject-downtown-redevelopment-police-bonds-mayoral-race-too-close-to-call/",
+    deadline:"", value:"$175M",
+    why:"Voters rejected the $175M police-HQ bond on Spanish River Blvd (Mar 11 2026); need remains, tax path closed. New council seated Mar 31 2026 — confirm current officials before outreach." },
+  { name:"Daytona Beach — new Fire Station No. 1 ($27M, grant-funded, active)",
+    serviceLine:"Police/Fire", type:"News-Proof", jurisdiction:"Daytona Beach, FL", state:"FL",
+    signal:"Warm", source:"DaytonaBeach.gov", link:"https://www.daytonabeach.gov/m/newsflash/home/detail/1950",
+    deadline:"", value:"$27M",
+    why:"Relocating Volusia's busiest station (1925 flood-prone building) with a $5.2M Resilient Florida grant. Active FL fire-facility demand; construction RFP due 2/10/26 has closed. News dated Jun 25 2026." },
+  { name:"North Bay Village — Village Hall/Public Safety Complex + Miami-Dade Fire Station (RFP 2026-006-02)",
+    serviceLine:"Police/Fire", type:"RFP", jurisdiction:"North Bay Village, FL", state:"FL",
+    signal:"Warm", source:"northbayvillage-fl.gov", link:"https://northbayvillage-fl.gov/wp-content/uploads/2026/05/4CC895503-RFP-Phase2-Construction-of-Village-Hall-Public-Safety-Complex-And-Fire-Station-1.pdf",
+    deadline:"", value:"",
+    why:"Public-safety complex incl. Miami-Dade fire station; construction to commence by Aug 30 2026, completion Oct 2028. Source ~May 2026. Confirm current RFP/award status." },
+  { name:"North Port — new police headquarters ($115M bond rejected, 68% no)",
+    serviceLine:"Police/Fire", type:"Trigger", jurisdiction:"North Port, FL", state:"FL",
+    signal:"Watch", source:"Bond Buyer", link:"https://www.bondbuyer.com/news/florida-city-voters-reject-bonds",
+    deadline:"", value:"$115M",
+    why:"Textbook wedge — voters killed the police-HQ bond (68% no); City Manager said alternatives will be 'more costly.' Charter requires voter referendum to borrow. Source May 15 2025 (>12 mo) — re-check current status. Unverified — confirm City Manager (Jerome Fletcher)." },
+  { name:"Fort Meade — new fire station, CMAR (RFP 2026-01)",
+    serviceLine:"Police/Fire", type:"RFP", jurisdiction:"Fort Meade (Polk Co.), FL", state:"FL",
+    signal:"Watch", source:"City of Fort Meade", link:"https://cms2.revize.com/revize/fortmeadefl/RFP%202026-01%20Fire%20Station%20Construction%20Manager.pdf",
+    deadline:"", value:"",
+    why:"CMAR for a new fire station; substantial completion targeted Jan 1 2027. Source Feb 4 2026 — RFP deadline likely passed; confirm phase/award." },
+  { name:"Statewide FL — property-tax amendment budget distress (Orlando/Sanford/Orange Co.)",
+    serviceLine:"Police/Fire", type:"News-Proof", jurisdiction:"Statewide — FL", state:"FL",
+    signal:"Watch", source:"ClickOrlando / Spectrum News 13", link:"https://www.clickorlando.com/news/local/2026/07/14/orlando-warns-of-hiring-freezes-budget-cuts-if-florida-property-tax-overhaul-passes/",
+    deadline:"", value:"",
+    why:"Trigger map + content: Orlando ($58M public-safety shortfall, hiring freeze thru FY28-29, may cancel approved projects), Sanford ($15M loss), Orange Co. ($160M+ loss, Fire Rescue warns). Ballot language struck Aug 4 2026; special session likely. Frames the savings-as-financing pitch. Sources Jul 2026." }
+];
+
+let boardState = null; // {groups, columns, existing}
+let dupFlags = [];
+
+const grid = document.getElementById('grid');
+const logEl = document.getElementById('log');
+function log(html, cls){ logEl.innerHTML += "\n" + (cls?`<span class="${cls}">${html}</span>`:html); logEl.scrollTop = logEl.scrollHeight; }
+function clearLog(msg){ logEl.innerHTML = msg || ""; }
+
+function render(){
+  grid.innerHTML = "";
+  ITEMS.forEach((it,i)=>{
+    const dup = dupFlags[i];
+    const card = document.createElement('div');
+    card.className = "item" + (dup==='dup'?' dup':dup==='done'?' done':dup==='fail'?' fail':'');
+    card.id = "card"+i;
+    card.innerHTML = `
+      <h3>${it.name}</h3>
+      <div class="tags">
+        <span class="tag">${it.serviceLine}</span>
+        <span class="tag">${it.type}</span>
+        <span class="tag">${it.jurisdiction}</span>
+        <span class="tag sig-${it.signal}">${it.signal}</span>
+        ${it.value?`<span class="tag">${it.value}</span>`:""}
+      </div>
+      <div class="why">${it.why}</div>
+      <div class="st q" id="st"+${i}>—</div>`;
+    grid.appendChild(card);
+    const st = card.querySelector('[id^="st"]');
+    if(dup==='dup'){ st.className="st s"; st.textContent="Duplicate on board — will skip"; }
+    else if(dup==='done'){ st.className="st d"; st.textContent="Written to FOR REVIEW ✓"; }
+    else if(dup==='fail'){ st.className="st f"; st.textContent="Write failed — see console"; }
+    else if(boardState){ st.className="st q"; st.textContent="New — ready to write"; }
+  });
+}
+render();
+
+// ---- Anthropic API call with monday.com MCP ----
+async function callClaude(userText){
+  const res = await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:"claude-sonnet-4-6",
+      max_tokens:1000,
+      messages:[{role:"user",content:userText}],
+      mcp_servers:[{type:"url",url:"https://mcp.monday.com/mcp",name:"monday"}]
+    })
+  });
+  if(!res.ok){ throw new Error("API "+res.status+" — "+(await res.text()).slice(0,300)); }
+  const data = await res.json();
+  const text = (data.content||[])
+    .filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+  return text;
+}
+function parseJSON(text){
+  const clean = text.replace(/```json/gi,"").replace(/```/g,"").trim();
+  const s = clean.indexOf("{"), e = clean.lastIndexOf("}");
+  if(s<0||e<0) throw new Error("No JSON in model reply: "+text.slice(0,200));
+  return JSON.parse(clean.slice(s,e+1));
+}
+
+// ---- Phase 1: read board + dedup ----
+async function phaseRead(){
+  document.getElementById('readBtn').disabled = true;
+  document.getElementById('writeBtn').disabled = true;
+  clearLog('<span class="dim">Reading board '+BOARD_ID+' …</span>');
+  try{
+    const prompt =
+`Use the monday.com tools to inspect board ${BOARD_ID}.
+Return ONLY a JSON object (no prose, no markdown) with exactly these keys:
+{
+ "groups":[{"id":"","title":""}],
+ "columns":[{"id":"","title":"","type":""}],
+ "existing":[{"name":"","link":""}]
+}
+"existing" = every current item's name and the value of its Link/URL column (empty string if none). Keep it compact.`;
+    const reply = await callClaude(prompt);
+    boardState = parseJSON(reply);
+    const cols = (boardState.columns||[]).length;
+    const grp = (boardState.groups||[]).length;
+    const ex = (boardState.existing||[]).length;
+    log(`Board read OK — ${cols} columns, ${grp} groups, ${ex} existing items.`,"ok");
+
+    // dedup locally
+    const exList = (boardState.existing||[]).map(e=>({
+      name:(e.name||"").toLowerCase().trim(),
+      link:(e.link||"").toLowerCase().trim()
+    }));
+    let dupCount=0, newCount=0;
+    dupFlags = ITEMS.map(it=>{
+      const link = it.link.toLowerCase().trim();
+      const juris = it.jurisdiction.toLowerCase().split(",")[0].trim();
+      const hit = exList.some(e =>
+        (link && e.link===link) ||
+        (e.name.includes(juris) && (e.name.includes("police")||e.name.includes("fire")||e.name.includes(juris)))
+      );
+      if(hit){dupCount++;return 'dup';} else {newCount++;return null;}
+    });
+    render();
+    log(`Dedup: ${newCount} new, ${dupCount} already on board.`, dupCount?"skip":"ok");
+    const grpMatch = (boardState.groups||[]).find(g=>/review/i.test(g.title));
+    log(grpMatch ? `Target group: "${grpMatch.title}" (${grpMatch.id}).`
+                 : `No "FOR REVIEW" group found — will use the board's first/top group.`, grpMatch?"dim":"skip");
+    if(newCount>0) document.getElementById('writeBtn').disabled = false;
+    else log("Nothing new to write.","skip");
+  }catch(err){
+    log("Read failed: "+err.message,"err");
+    log("If this is an auth/permission error, the monday.com MCP may still be blocking writes for this session. The CSV fallback Brando has is the backup path.","dim");
+  }finally{
+    document.getElementById('readBtn').disabled = false;
+  }
+}
+
+// ---- Phase 2: write new items ----
+async function phaseWrite(){
+  if(!boardState){ log("Run step 1 first.","skip"); return; }
+  document.getElementById('writeBtn').disabled = true;
+  document.getElementById('readBtn').disabled = true;
+  const grpMatch = (boardState.groups||[]).find(g=>/review/i.test(g.title));
+  const groupId = grpMatch ? grpMatch.id : ((boardState.groups||[])[0]||{}).id || "";
+  const colsBrief = JSON.stringify(boardState.columns||[]);
+
+  let done=0, fail=0, skipped=0;
+  for(let i=0;i<ITEMS.length;i++){
+    if(dupFlags[i]==='dup'){ skipped++; continue; }
+    const it = ITEMS[i];
+    const st = document.querySelector('#card'+i+' [id^="st"]');
+    if(st){ st.className="st q"; st.textContent="Writing …"; }
+    log(`[${i+1}/${ITEMS.length}] ${it.jurisdiction} …`,"dim");
+    try{
+      const fields = {
+        "Service Line":it.serviceLine, "Type":it.type, "Jurisdiction":it.jurisdiction,
+        "State":it.state, "Signal Strength":it.signal, "Source":it.source,
+        "Link":it.link, "Deadline":it.deadline, "Est. Value":it.value,
+        "Why It Matters":it.why, "Status":"New", "Found Date":TODAY
+      };
+      const prompt =
+`On monday.com board ${BOARD_ID}, create ONE item in group id "${groupId}".
+Item name: ${JSON.stringify(it.name)}
+These are the board columns (id, title, type): ${colsBrief}
+Set column values by matching each field below to the column whose title matches (case-insensitive); ignore fields that have no matching column. For status/dropdown columns use the given label, creating the label if it does not exist. For date columns use YYYY-MM-DD. For link columns set url and text.
+Fields: ${JSON.stringify(fields)}
+After creating, return ONLY JSON: {"success":true,"item_id":"<id>","skipped_fields":[...]}  or  {"success":false,"error":"<msg>"}`;
+      const reply = await callClaude(prompt);
+      const r = parseJSON(reply);
+      if(r.success){
+        dupFlags[i]='done'; done++;
+        log(`   ✓ created (item ${r.item_id||"?"})` + ((r.skipped_fields&&r.skipped_fields.length)?` — no column for: ${r.skipped_fields.join(", ")}`:""),"ok");
+      }else{
+        dupFlags[i]='fail'; fail++;
+        log("   ✗ "+(r.error||"unknown error"),"err");
+      }
+    }catch(err){
+      dupFlags[i]='fail'; fail++;
+      log("   ✗ "+err.message,"err");
+    }
+    render();
+  }
+  log(`Done. ${done} written, ${skipped} skipped (dupes), ${fail} failed.`, fail?"err":"ok");
+  if(fail>0) document.getElementById('writeBtn').disabled = false;
+  document.getElementById('readBtn').disabled = false;
+}
+
+function resetRun(){
+  boardState=null; dupFlags=[];
+  document.getElementById('writeBtn').disabled = true;
+  document.getElementById('readBtn').disabled = false;
+  clearLog('<span class="dim">Reset. Step 1 reads the board and dedups before anything is written.</span>');
+  render();
+}
+</script>
+</body>
+</html>
