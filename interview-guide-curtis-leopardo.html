@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On-Camera Interview Guide — Curtis Leopardo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101A26;--slate:#2A3B4D;--steel:#5B6B7A;
+    --paper:#EEF0F0;--card:#FBFBFA;--line:#D6DBDB;--line-strong:#C0C7C7;
+    --gold:#B8842A;--gold-soft:#F1E6CA;--verify:#2E6E52;--hold:#A6402F;
+    --display:"Archivo",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:940px;margin:0 auto;padding:44px 40px 64px;}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 14px;}
+  a{color:var(--gold);}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  /* Masthead */
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:22px;}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.6vw,42px);line-height:1.02;letter-spacing:-.015em;margin:0;max-width:18ch;}
+  .brandmark{text-align:right;font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--steel);white-space:nowrap;}
+  .brandmark strong{display:block;font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink);}
+  .brandmark .x{color:var(--gold);padding:0 4px;}
+  .srcline{margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.03em;}
+  .srcline b{color:var(--ink);}
+
+  section{margin-top:38px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:18px;}
+  .sec-num{font-family:var(--mono);font-weight:600;font-size:12px;color:var(--gold);}
+  .sec-head h2{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0;flex:1;}
+  .sec-head .aside{font-family:var(--mono);font-size:11px;color:var(--steel);}
+  p.lead{font-size:15px;color:var(--slate);max-width:70ch;margin:0 0 10px;}
+
+  /* Throughline callout */
+  .throughline{background:var(--ink);color:#E9EEF1;padding:22px 24px;position:relative;overflow:hidden;}
+  .throughline::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0%,rgba(184,132,42,.20),transparent 55%);pointer-events:none;}
+  .throughline .tl-k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);position:relative;}
+  .throughline p{position:relative;margin:10px 0 0;font-size:15px;color:#C9D4DC;max-width:72ch;}
+  .throughline p b{color:#fff;}
+  .throughline .promise{position:relative;margin-top:16px;border-left:3px solid var(--gold);padding:2px 0 2px 16px;font-family:var(--display);font-weight:600;font-size:16px;color:#fff;}
+  .throughline .promise cite{display:block;font-family:var(--mono);font-size:10.5px;font-style:normal;letter-spacing:.06em;color:#93A3AF;margin-top:8px;}
+
+  /* Already-covered grid */
+  .covered{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px;}
+  .cov{border:1px solid var(--line);background:var(--card);border-left:3px solid var(--line-strong);padding:11px 14px;}
+  .cov .who{font-family:var(--display);font-weight:700;font-size:13.5px;}
+  .cov .lane{font-size:12.5px;color:var(--slate);margin-top:2px;}
+
+  /* Standard rules */
+  .rules{border:1px solid var(--line);background:var(--card);}
+  .rule{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:11px 15px;border-bottom:1px solid var(--line);align-items:start;}
+  .rule:last-child{border-bottom:0;}
+  .rule .rn{font-family:var(--mono);font-size:11px;color:var(--gold);font-weight:600;padding-top:1px;}
+  .rule .rt{font-size:13.5px;color:var(--slate);}
+  .rule .rt b{color:var(--ink);font-weight:600;}
+
+  /* Subject block */
+  .subject{border:1px solid var(--line-strong);background:var(--card);margin-top:20px;}
+  .subj-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;padding:20px 22px;border-bottom:1px solid var(--line);}
+  .subj-head.curtis{border-top:4px solid var(--ink);}
+  .subj-id .nm{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.01em;}
+  .subj-id .rl{font-size:13.5px;color:var(--steel);margin-top:2px;}
+  .subj-lane{max-width:42ch;}
+  .subj-lane .ll{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+  .subj-lane p{margin:0;font-size:13px;color:var(--slate);}
+
+  .fishing{padding:16px 22px 4px;}
+  .fishing .fh{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:10px;}
+  .grab{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px;}
+  .grab span{font-family:var(--mono);font-size:11px;border:1px solid var(--line-strong);background:#fff;padding:5px 9px;color:var(--slate);}
+  .grab span b{color:var(--gold);font-weight:600;}
+
+  .qgroup{padding:6px 22px 4px;}
+  .qg-label{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;font-weight:600;margin:16px 0 6px;padding-top:12px;border-top:1px dashed var(--line);}
+  .qgroup:first-of-type .qg-label{border-top:0;padding-top:0;}
+  .q{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .q:last-child{border-bottom:0;}
+  .q .qn{font-family:var(--mono);font-size:12px;color:var(--ink);font-weight:600;padding-top:2px;}
+  .q .qbody .ask{font-size:14.5px;color:var(--ink);font-weight:500;}
+  .q .qbody .for{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:4px;letter-spacing:.01em;}
+  .q .qbody .for b{color:var(--verify);}
+
+  .broll{margin:12px 22px 22px;background:var(--paper);border:1px solid var(--line);padding:12px 15px;}
+  .broll .bh{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-bottom:6px;}
+  .broll p{margin:0;font-size:12.5px;color:var(--slate);}
+  .broll p b{color:var(--ink);}
+
+  /* Figures table */
+  .figs{border:1px solid var(--line);background:var(--card);}
+  .figrow{display:grid;grid-template-columns:1fr 128px;gap:16px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line);}
+  .figrow:last-child{border-bottom:0;}
+  .figrow .fq{font-size:13.5px;}
+  .figrow .fq small{display:block;font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:2px;}
+  .figrow .fq b{font-weight:600;}
+  .st{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;text-align:right;font-weight:600;white-space:nowrap;}
+  .st.use{color:var(--verify);}
+  .st.confirm{color:var(--gold);}
+  .st.hold{color:var(--hold);}
+  .st.need{color:var(--slate);}
+
+  footer{margin-top:48px;padding-top:18px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:10.5px;color:var(--steel);}
+  footer b{color:var(--ink);}
+
+  @media (max-width:680px){
+    .sheet{padding:26px 18px 44px;}
+    .covered,.figrow{grid-template-columns:1fr;}
+    .figrow .st{text-align:left;}
+    .brandmark{text-align:left;}
+    .q{grid-template-columns:1fr;gap:3px;}
+  }
+  @media print{
+    body{background:#fff;}
+    .sheet{max-width:none;padding:0 10px;}
+    .throughline,.subj-head.curtis{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .subject,section,.q{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- MAST -->
+  <header class="mast">
+    <div class="mast-top">
+      <div>
+        <p class="kicker">On-Camera Interview Guide · First Responder Initiative</p>
+        <h1>Curtis Leopardo</h1>
+      </div>
+      <div class="brandmark">
+        <strong>Leopardo Efficiency<span class="x">×</span>The VDO Aigency</strong>
+        Shoot prep · CEO sit-down
+      </div>
+    </div>
+    <div class="srcline">Built from: <b>Cleveland kickoff press conference</b> · the <b>Rob Vollrath</b> &amp; <b>Heather Garay</b> sit-downs — his executives own the operational proof; this is the mission layer above it. Pair with completed-stations montage and Lawrence fire-station footage.</div>
+  </header>
+
+  <!-- THROUGHLINE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2>The one job</h2>
+    </div>
+    <div class="throughline">
+      <div class="tl-k">What the CEO sit-down must land</div>
+      <p>Curtis is the only voice who can say why the company exists to do this at all. Rob owns the authority and the guarantee; Heather owns the buyer's trust; the PMs own the build. Curtis owns the mission above all three: <b>this is first-responder infrastructure, and energy savings is only how a city pays for it.</b> His job is to lift Cleveland from a project into a <b>national pattern</b> — nearly every city has these buildings, and none can tell its first responders they don't deserve working ones — and to put the Leopardo name behind that promise.</p>
+      <div class="promise">At the kickoff, the city said the police stations were first and the firehouses would follow — "long time coming."
+        <cite>— City councilman, Cleveland kickoff press conference (public record)</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALREADY COVERED -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>Already on tape — don't re-ask</h2>
+      <span class="aside">keep Curtis above the operational detail</span>
+    </div>
+    <div class="covered">
+      <div class="cov"><div class="who">Gio &amp; Justin (PMs)</div><div class="lane">The build — union labor, local jobs, quality, "20 years from now what's still standing." The hands-on proof.</div></div>
+      <div class="cov"><div class="who">Rob Vollrath</div><div class="lane">Authority + the guarantee is real + the fire station as a kept public promise. The operator's voice.</div></div>
+      <div class="cov"><div class="who">Heather Garay</div><div class="lane">The finance de-risk and the recruiting/retention "unmarked savings." The buyer's-eye trust.</div></div>
+      <div class="cov"><div class="who">So Curtis adds</div><div class="lane">The mission &amp; the mandate — why this is the work, why it scales nationally, and why the Leopardo name is on it.</div></div>
+    </div>
+  </section>
+
+  <!-- PRODUCTION STANDARD -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>Production standard</h2>
+      <span class="aside">read before rolling</span>
+    </div>
+    <div class="rules">
+      <div class="rule"><div class="rn">1</div><div class="rt"><b>Restate the question in the answer.</b> Answers must stand alone. "The reason we build around police and fire facilities…" — not "Because…". We only keep his voice, not ours.</div></div>
+      <div class="rule"><div class="rn">2</div><div class="rt"><b>No abbreviations on camera.</b> Say "Energy Savings Performance Contract," "first responders," "heating and cooling" — not the acronyms. (Same note that tripped up the PM takes.)</div></div>
+      <div class="rule"><div class="rn">3</div><div class="rt"><b>Say the full company name once, cleanly.</b> Confirm the exact legal name at the top of the sit-down — speech-to-text has been mangling it badly, so a clean on-camera read helps captions too.</div></div>
+      <div class="rule"><div class="rn">4</div><div class="rt"><b>One idea per answer.</b> The vision questions invite long answers — if he stacks three thoughts, ask for the best one again on its own. Short, self-contained takes cut into everything downstream.</div></div>
+      <div class="rule"><div class="rn">5</div><div class="rt"><b>Guardrail the language.</b> "Update or new construction," never "failing" or "deplorable" in Leopardo's own voice — the city can say that about its old buildings; we describe the fix, not the failure.</div></div>
+      <div class="rule"><div class="rn">6</div><div class="rt"><b>Figures: use only what's cleared.</b> See the figures table below. The CEO answers lean company-wide — those claims especially can't go on camera until they're green.</div></div>
+    </div>
+  </section>
+
+  <!-- CURTIS -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>Curtis Leopardo</h2>
+      <span class="aside">the mission + the mandate</span>
+    </div>
+    <div class="subject">
+      <div class="subj-head curtis">
+        <div class="subj-id">
+          <div class="nm">Curtis Leopardo</div>
+          <div class="rl">Chief Executive Officer, Leopardo Efficiency</div>
+        </div>
+        <div class="subj-lane">
+          <div class="ll">His lane only</div>
+          <p>The mission voice: why first-responder infrastructure is the work, why savings is the financing and not the product, and why this is a national pattern — not a Cleveland one-off. Not guarantee mechanics (Rob) or the finance walkthrough (Heather). The conviction underneath both.</p>
+        </div>
+      </div>
+
+      <div class="fishing">
+        <div class="fh">Soundbites we're fishing for</div>
+        <div class="grab">
+          <span>the thesis — <b>first-responder infrastructure</b>, savings is just how you pay</span>
+          <span><b>"nearly every city has these buildings"</b> — the national pattern</span>
+          <span>why the <b>Leopardo name</b> is on this — stewardship</span>
+          <span>the <b>first-call</b> invitation, at altitude</span>
+        </div>
+      </div>
+
+      <div class="qgroup">
+        <div class="qg-label">Open · identity</div>
+        <div class="q"><div class="qn">C1</div><div class="qbody"><div class="ask">Tell me who you are and what you do at Leopardo Efficiency.</div><div class="for">For: clean intro card — name, title, one line on leading the company.</div></div></div>
+
+        <div class="qg-label">The mission — why this work</div>
+        <div class="q"><div class="qn">C2</div><div class="qbody"><div class="ask">When you describe what Leopardo does, you don't call it an energy company. How do you describe it?</div><div class="for">For: <b>the reframe — this is public-safety / first-responder infrastructure; energy savings is the financing, not the product.</b> THE thesis line.</div></div></div>
+        <div class="q"><div class="qn">C3</div><div class="qbody"><div class="ask">Why build a company around police stations and firehouses specifically?</div><div class="for">For: the conviction — first responders as mission-critical; the human stakes behind the buildings.</div></div></div>
+        <div class="q"><div class="qn">C4</div><div class="qbody"><div class="ask">You've said the savings is the mechanism, not the mission. Unpack that for someone hearing it for the first time.</div><div class="for">For: savings-funds-the-facility at CEO altitude — outcome over mechanism. Pairs with Rob R2 but stays at vision level; don't re-explain the code.</div></div></div>
+
+        <div class="qg-label">The national pattern — why this scales</div>
+        <div class="q"><div class="qn">C5</div><div class="qbody"><div class="ask">Cleveland is five police stations, delivered. Why isn't this a Cleveland story?</div><div class="for">For: nearly every city in America has these facilities and the same problem; Cleveland is proof of a <b>repeatable pattern</b>.</div></div></div>
+        <div class="q"><div class="qn">C6</div><div class="qbody"><div class="ask">What is it about a police or fire facility that makes this an easier "yes" for a city than almost any other public project?</div><div class="for">For: <b>the strategic wedge in his words — no council wants to deny first responders working buildings.</b> The insight that makes it national.</div></div></div>
+        <div class="q"><div class="qn">C7</div><div class="qbody"><div class="ask">A mayor or city manager watching this — what's the pattern you want them to recognize in their own city?</div><div class="for">For: the "call us first" positioning at CEO altitude — the invitation, not the pitch.</div></div></div>
+
+        <div class="qg-label">The name &amp; the mandate</div>
+        <div class="q"><div class="qn">C8</div><div class="qbody"><div class="ask">Your name is on this. What does it mean that a city trusts the Leopardo name with something this essential?</div><div class="for">For: <b>stewardship, legacy, the weight of the name — unique to the CEO.</b> No one else on the slate can say this.</div></div></div>
+        <div class="q"><div class="qn">C9</div><div class="qbody"><div class="ask">What is Leopardo Efficiency actually building toward — five years out, ten?</div><div class="for">For: the ambition and the national mission; where this goes beyond any one contract.</div></div></div>
+
+        <div class="qg-label">The authority close</div>
+        <div class="q"><div class="qn">C10</div><div class="qbody"><div class="ask">When a city's police or fire facilities need to be updated or built new, why should Leopardo be the first call?</div><div class="for">For: <b>THE positioning line</b> — same as R10 and H10, now in the CEO's voice. Watch the guardrail — "update or new construction," not "failing."</div></div></div>
+      </div>
+
+      <div class="broll">
+        <div class="bh">Cut against</div>
+        <p>C2–C4 → <b>completed police-station montage</b> (the outcome the savings paid for). C5–C7 → <b>wide civic / multi-city b-roll</b> to sell the national pattern. C8–C9 → the <b>Leopardo name</b> and completed facilities in use by first responders. C10 → completed stations into the fire station — matching Rob R10 and Heather H10.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIGURES -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>Figures &amp; clearances</h2>
+      <span class="aside">green = cleared · Curtis skews company-wide</span>
+    </div>
+    <div class="figs">
+      <div class="figrow"><div class="fq"><b>"Never missed a guarantee · ~120% of forecasted savings"</b><small>The CEO is exactly who states this company-wide — get explicit sign-off it's cleared as a company claim before camera</small></div><div class="st confirm">Confirm</div></div>
+      <div class="figrow"><div class="fq"><b>Portfolio scale · total guaranteed savings delivered to date</b><small>CEO-level anchor — get the exact, current number from Leopardo before the shoot; do not state from memory</small></div><div class="st confirm">Confirm</div></div>
+      <div class="figrow"><div class="fq"><b>Guarantee mechanism (state code)</b><small>If savings fall short, Leopardo covers the difference — public record</small></div><div class="st use">Use</div></div>
+      <div class="figrow"><div class="fq"><b>Track record: Speedway IN · South Euclid OH · Cleveland OH</b><small>From Drake — strong credibility line for the "national pattern" answers</small></div><div class="st use">Use</div></div>
+      <div class="figrow"><div class="fq"><b>$21M investment · all five police districts</b><small>Stated publicly by the mayor at the kickoff — his Cleveland proof-point anchor</small></div><div class="st use">Use</div></div>
+      <div class="figrow"><div class="fq"><b>~$108,000 / year energy savings (this project)</b><small>From Justin's take — flagged on tape as "only if we need it, don't put in the video"</small></div><div class="st hold">Hold</div></div>
+      <div class="figrow"><div class="fq"><b>"North of $7M / year across all savings streams"</b><small>Justin — stated as an estimate; confirm estimate vs. guaranteed before any use</small></div><div class="st hold">Hold</div></div>
+      <div class="figrow"><div class="fq"><b>$90M+ new police headquarters</b><small>Public, but a separate project — use only if we deliberately widen the story</small></div><div class="st confirm">Careful</div></div>
+      <div class="figrow"><div class="fq"><b>Exact legal entity name</b><small>Confirm at the shoot; speech-to-text mangles it every time</small></div><div class="st need">Confirm</div></div>
+    </div>
+  </section>
+
+  <!-- ASSETS -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>Footage on hand</h2>
+    </div>
+    <p class="lead"><b>Completed police-station montage</b> — the mission proof under Curtis's thesis; the five delivered districts are what "national pattern" points back to.</p>
+    <p class="lead"><b>Lawrence fire-station footage</b> — carries the continuation / kept promise Curtis generalizes into the mission.</p>
+    <p class="lead"><b>The Rob &amp; Heather sit-downs</b> — the operational layer Curtis's mission film sits on top of. His piece is the top-of-funnel "why"; theirs are the "how" (Rob) and the "trust" (Heather).</p>
+  </section>
+
+  <footer>
+    <span>Prepared by <b>The VDO Aigency</b> for Leopardo Efficiency</span>
+    <span>First Responder Initiative · Curtis Leopardo (CEO) sit-down</span>
+  </footer>
+
+</div>
+</body>
+</html>
