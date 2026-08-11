@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Target Interview Script — Curtis Leopardo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101A26;--slate:#2A3B4D;--steel:#5B6B7A;
+    --paper:#EEF0F0;--card:#FBFBFA;--line:#D6DBDB;--line-strong:#C0C7C7;
+    --gold:#B8842A;--gold-soft:#F1E6CA;--verify:#2E6E52;--hold:#A6402F;
+    --display:"Archivo",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:940px;margin:0 auto;padding:44px 40px 64px;}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 14px;}
+  a{color:var(--gold);}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  /* Masthead */
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:22px;}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.6vw,42px);line-height:1.02;letter-spacing:-.015em;margin:0;max-width:18ch;}
+  .brandmark{text-align:right;font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--steel);white-space:nowrap;}
+  .brandmark strong{display:block;font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink);}
+  .brandmark .x{color:var(--gold);padding:0 4px;}
+  .srcline{margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.03em;}
+  .srcline b{color:var(--ink);}
+
+  section{margin-top:38px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:18px;}
+  .sec-num{font-family:var(--mono);font-weight:600;font-size:12px;color:var(--gold);}
+  .sec-head h2{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0;flex:1;}
+  .sec-head .aside{font-family:var(--mono);font-size:11px;color:var(--steel);}
+  p.lead{font-size:15px;color:var(--slate);max-width:70ch;margin:0 0 10px;}
+
+  /* How-to callout */
+  .throughline{background:var(--ink);color:#E9EEF1;padding:22px 24px;position:relative;overflow:hidden;}
+  .throughline::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0%,rgba(184,132,42,.20),transparent 55%);pointer-events:none;}
+  .throughline .tl-k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);position:relative;}
+  .throughline p{position:relative;margin:10px 0 0;font-size:15px;color:#C9D4DC;max-width:72ch;}
+  .throughline p b{color:#fff;}
+
+  /* Script */
+  .script{border:1px solid var(--line-strong);background:var(--card);margin-top:4px;}
+  .grp{padding:2px 22px;}
+  .grp-label{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;font-weight:600;margin:20px 0 4px;padding-top:14px;border-top:1px dashed var(--line);}
+  .grp:first-of-type .grp-label{border-top:0;padding-top:2px;}
+  .line{padding:14px 0 18px;border-bottom:1px solid var(--line);}
+  .grp:last-child .line:last-child{border-bottom:0;}
+  .cue{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.01em;margin-bottom:11px;}
+  .cue b{color:var(--gold);font-weight:600;}
+  .read{font-family:var(--display);font-weight:500;font-size:17px;line-height:1.6;color:var(--ink);max-width:62ch;letter-spacing:-.005em;}
+  .read strong{font-weight:700;color:var(--ink);}
+  .flag{margin-top:11px;font-family:var(--mono);font-size:10.5px;line-height:1.5;color:var(--hold);background:#FBEEE9;border:1px solid #ECD3CB;padding:7px 11px;max-width:62ch;}
+  .flag b{color:var(--hold);}
+  .cut{margin-top:9px;font-family:var(--mono);font-size:10.5px;color:var(--steel);}
+  .cut b{color:var(--ink);}
+
+  /* Clearance strip */
+  .clr{border:1px solid var(--line);background:var(--card);padding:14px 16px;margin-top:4px;}
+  .clr p{margin:0 0 7px;font-size:13px;color:var(--slate);}
+  .clr p:last-child{margin-bottom:0;}
+  .clr b{color:var(--ink);}
+  .tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;}
+  .tag.use{color:var(--verify);}
+  .tag.confirm{color:var(--gold);}
+  .tag.hold{color:var(--hold);}
+
+  footer{margin-top:48px;padding-top:18px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:10.5px;color:var(--steel);}
+  footer b{color:var(--ink);}
+
+  @media (max-width:680px){
+    .sheet{padding:26px 18px 44px;}
+    .brandmark{text-align:left;}
+    .read{font-size:16px;}
+  }
+  @media print{
+    body{background:#fff;}
+    .sheet{max-width:none;padding:0 10px;}
+    .throughline{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .script,section,.line{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- MAST -->
+  <header class="mast">
+    <div class="mast-top">
+      <div>
+        <p class="kicker">Target Interview Script · First Responder Initiative</p>
+        <h1>Curtis Leopardo</h1>
+      </div>
+      <div class="brandmark">
+        <strong>Leopardo Efficiency<span class="x">×</span>The VDO Aigency</strong>
+        Shoot prep · CEO sit-down · target read
+      </div>
+    </div>
+    <div class="srcline">Derived from the <b>Curtis Leopardo interview guide</b> (C1–C10). This is the answer we're steering toward for each question — model soundbites in his voice, already built to the production standard.</div>
+  </header>
+
+  <!-- HOW TO USE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2>How to use this</h2>
+    </div>
+    <div class="throughline">
+      <div class="tl-k">Target read — not a teleprompter</div>
+      <p>These are the answers we <b>want</b>, not lines to memorize. Keep the sit-down conversational; use this to know when we've <b>got the take</b>. Every answer here already restates the question so it stands alone, holds to one idea, spells the terms out, and stays inside the guardrail — <b>"update or new construction," never "failing."</b> Anything in a red flag is a figure that isn't cleared yet — leave it out until it's green.</p>
+    </div>
+  </section>
+
+  <!-- THE SCRIPT -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>The script</h2>
+      <span class="aside">C1–C10 · Curtis's voice</span>
+    </div>
+
+    <div class="script">
+
+      <div class="grp">
+        <div class="grp-label">Open · identity</div>
+        <div class="line">
+          <div class="cue"><b>C1</b> &nbsp;Tell me who you are and what you do at Leopardo Efficiency.</div>
+          <div class="read">I'm Curtis Leopardo, chief executive officer of Leopardo Efficiency. We help cities update or build the police stations and firehouses their first responders work out of, and we pay for the work out of savings the city didn't know it had. My job is to keep this whole company pointed at that.</div>
+          <div class="flag"><b>Confirm on-camera title.</b> Guide lists CEO of Leopardo Efficiency; verify whether his seat reads at the Leopardo Efficiency or the parent level before the read (Rule 3).</div>
+        </div>
+      </div>
+
+      <div class="grp">
+        <div class="grp-label">The mission — why this work</div>
+        <div class="line">
+          <div class="cue"><b>C2</b> &nbsp;When you describe what Leopardo does, you don't call it an energy company. How do you describe it?</div>
+          <div class="read">People hear what we do and assume we're an energy company. We're not. What we really do is <strong>unlock value a city can't see</strong> — money it's quietly losing in old systems and in the way it buys things — and turn that into savings the city can put toward a better city. We do it through an Energy Savings Performance Contract or smarter procurement, and we start with first responders, because a police station or a firehouse is something a community can't do without. The savings is the mechanism; <strong>a better city — starting with the people who protect it</strong> — is the mission.</div>
+        </div>
+        <div class="line">
+          <div class="cue"><b>C3</b> &nbsp;Why build a company around police stations and firehouses specifically?</div>
+          <div class="read">We lead with police stations and firehouses for one plain reason: those are the buildings a community can't do without. When someone calls for help, a person leaves one of those buildings to answer — and if that building is decades behind, we've quietly told the people who protect us that they come last. We don't believe they should. We do plenty of other work for a city, but first responders are where we start, because that's where it matters most.</div>
+        </div>
+        <div class="line">
+          <div class="cue"><b>C4</b> &nbsp;You've said the savings is the mechanism, not the mission. Unpack that.</div>
+          <div class="read">The reason I say the savings is the mechanism and not the mission is that the savings is what makes the mission affordable. The upgrades pay for themselves out of what a city was already wasting on old systems. And because the work is done under an <strong>Energy Savings Performance Contract</strong>, that savings is guaranteed by state code — if it ever falls short, we cover the difference, not the city. So the money question, which is where most of these projects die, is handled. What's left is the thing that mattered all along: the building.</div>
+          <div class="flag"><b>Optional insert if cleared:</b> the company-wide "never missed a guarantee" line lands naturally at the end of this answer. It's <b>Confirm</b> on the figures table — get sign-off it's cleared as a company claim before he says it on camera.</div>
+        </div>
+      </div>
+
+      <div class="grp">
+        <div class="grp-label">The national pattern — why this scales</div>
+        <div class="line">
+          <div class="cue"><b>C5</b> &nbsp;Cleveland is five police stations, delivered. Why isn't this a Cleveland story?</div>
+          <div class="read">Cleveland is five police stations, delivered — a twenty-one-million-dollar investment across all five districts — but it would be a mistake to hear that as a Cleveland story. Nearly every city in America has the same buildings and the same problem: police and fire facilities that have been waiting years for their turn. Cleveland just proved the pattern works at scale. We've done the same in Speedway, Indiana, and South Euclid, Ohio. The city changes; the problem doesn't.</div>
+          <div class="cut">Cut against: <b>completed police-station montage</b> resolving into wide multi-city / civic b-roll.</div>
+        </div>
+        <div class="line">
+          <div class="cue"><b>C6</b> &nbsp;What makes a police or fire facility an easier "yes" than almost any other public project?</div>
+          <div class="read">What makes a police or fire facility an easier decision than almost any other public project is that no one on a city council wants to be the person who tells first responders their building doesn't matter. Roads and parks get argued over for years. But funding a working station for the men and women who run toward danger is a vote almost no one wants to be against. That's not a sales angle — it's just true, and it's true in every city.</div>
+        </div>
+        <div class="line">
+          <div class="cue"><b>C7</b> &nbsp;A mayor or city manager watching this — what pattern should they recognize in their own city?</div>
+          <div class="read">If you're a mayor or a city manager watching this, here's the pattern I'd want you to see in your own city: you already have police and fire facilities that need to be updated or built new, and you've probably assumed there's no money for it. There is. It's sitting in what those buildings waste every year. The moment you see that, the question stops being "can we afford this" and becomes "why haven't we done it yet."</div>
+        </div>
+      </div>
+
+      <div class="grp">
+        <div class="grp-label">The name &amp; the mandate</div>
+        <div class="line">
+          <div class="cue"><b>C8</b> &nbsp;Your name is on this. What does it mean that a city trusts the Leopardo name with something this essential?</div>
+          <div class="read">My name is on this company, and that's not a small thing to me. When a city trusts the Leopardo name with a police station or a firehouse, they're trusting us with something a whole community organizes its sense of safety around. I don't get to treat that as a transaction. The name means we're still standing behind that building long after the work is done — because my family's name is standing behind it too.</div>
+        </div>
+        <div class="line">
+          <div class="cue"><b>C9</b> &nbsp;What is Leopardo Efficiency building toward — five years out, ten?</div>
+          <div class="read">Five or ten years out, what we're building toward is simple to say and hard to earn: we want to be the company a city calls first, anywhere in the country, when it's ready to turn savings it didn't know it had into a stronger city — and for most of them, that starts with their police and fire facilities. Not because we sold them, but because the last city like theirs already proved it works. If we get that right, a lot of first responders end up in buildings worthy of what we ask of them, and a lot of cities fund things they thought they couldn't. That's the ambition.</div>
+        </div>
+      </div>
+
+      <div class="grp">
+        <div class="grp-label">The authority close</div>
+        <div class="line">
+          <div class="cue"><b>C10</b> &nbsp;When a city's police or fire facilities need to be updated or built new, why should Leopardo be the first call?</div>
+          <div class="read">When a city's police or fire facilities need to be updated or built new, Leopardo should be the first call — because we've done exactly this, we guarantee the savings that pays for it, and we treat those buildings the way the people who work in them deserve. We've proven it in Cleveland and beyond. Call us first, and we'll show you how your own city already has what it needs to do this.</div>
+          <div class="cut">Cut against: completed stations into the fire station. <b>Matches the R10 and H10 close — intercuttable across all three.</b></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLEARANCE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>What this script uses — and holds</h2>
+      <span class="aside">figures discipline</span>
+    </div>
+    <div class="clr">
+      <p><span class="tag use">Uses (cleared)</span> &nbsp;<b>$21M across five districts</b> · the <b>Energy Savings Performance Contract</b> guarantee (state code, Leopardo covers any shortfall) · track record in <b>Speedway, Indiana</b> and <b>South Euclid, Ohio</b>.</p>
+      <p><span class="tag confirm">Holds for sign-off</span> &nbsp;The company-wide <b>"never missed a guarantee"</b> claim and any <b>portfolio-scale</b> number are kept out of the read on purpose — one marked insert point in C4 shows where they'd go once cleared.</p>
+      <p><span class="tag hold">Kept out entirely</span> &nbsp;The <b>per-year energy figures</b> flagged on tape ($108K / "north of $7M") and the <b>$90M headquarters</b> — none appear here.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Prepared by <b>The VDO Aigency</b> for Leopardo Efficiency</span>
+    <span>First Responder Initiative · Curtis Leopardo (CEO) · target script</span>
+  </footer>
+
+</div>
+</body>
+</html>
