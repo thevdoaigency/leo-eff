@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paper Edits — Four Cuts We Can Assemble Now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101A26;--slate:#2A3B4D;--steel:#5B6B7A;
+    --paper:#EEF0F0;--card:#FBFBFA;--line:#D6DBDB;--line-strong:#C0C7C7;
+    --gold:#B8842A;--gold-soft:#F1E6CA;--verify:#2E6E52;--hold:#A6402F;
+    --display:"Archivo",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:940px;margin:0 auto;padding:44px 40px 64px;}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 14px;}
+  a{color:var(--gold);}
+
+  /* Masthead */
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:22px;}
+  .mast-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.6vw,42px);line-height:1.02;letter-spacing:-.015em;margin:0;max-width:18ch;}
+  .brandmark{text-align:right;font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--steel);white-space:nowrap;}
+  .brandmark strong{display:block;font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink);}
+  .brandmark .x{color:var(--gold);padding:0 4px;}
+  .srcline{margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--steel);letter-spacing:.03em;line-height:1.6;}
+  .srcline b{color:var(--ink);}
+
+  section{margin-top:38px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:14px;}
+  .sec-num{font-family:var(--mono);font-weight:600;font-size:12px;color:var(--gold);}
+  .sec-head h2{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em;margin:0;flex:1;}
+  .sec-head .aside{font-family:var(--mono);font-size:11px;color:var(--steel);text-align:right;}
+  .logline{font-size:14px;color:var(--slate);max-width:74ch;margin:0 0 4px;font-style:italic;}
+
+  /* Conventions strip */
+  .conv{border:1px solid var(--line);background:var(--card);}
+  .crow{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:10px 15px;border-bottom:1px solid var(--line);align-items:start;}
+  .crow:last-child{border-bottom:0;}
+  .crow .ck{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-top:2px;}
+  .crow .cv{font-size:13px;color:var(--slate);}
+  .crow .cv b{color:var(--ink);font-weight:600;}
+  .tag{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+  .tag.use{color:var(--verify);}
+  .tag.hold{color:var(--hold);}
+  .tag.confirm{color:var(--gold);}
+
+  /* Sequence */
+  .seq{border:1px solid var(--line-strong);background:var(--card);margin-top:4px;}
+  .bite{padding:13px 18px 15px;border-bottom:1px solid var(--line);}
+  .bite:last-child{border-bottom:0;}
+  .bite.struct{background:var(--paper);}
+  .slug{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;margin-bottom:7px;}
+  .slug .ord{color:var(--gold);font-weight:600;}
+  .slug .tc{color:var(--steel);}
+  .slug .spk{color:var(--ink);font-weight:600;letter-spacing:.02em;}
+  .slug.curtis .spk{color:var(--gold);}
+  .slug.broll .spk{color:var(--steel);text-transform:uppercase;letter-spacing:.1em;}
+  .said{font-family:var(--display);font-weight:500;font-size:15.5px;line-height:1.55;color:var(--ink);max-width:66ch;letter-spacing:-.004em;}
+  .said.vo{font-family:var(--body);font-weight:400;font-style:italic;font-size:13.5px;color:var(--slate);}
+  .said em.br{font-style:normal;color:var(--steel);}
+  .note{margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--steel);line-height:1.5;}
+  .note b{color:var(--ink);}
+  .inpt{margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.02em;}
+
+  footer{margin-top:48px;padding-top:18px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:10.5px;color:var(--steel);}
+  footer b{color:var(--ink);}
+
+  @media (max-width:680px){
+    .sheet{padding:26px 18px 44px;}
+    .brandmark{text-align:left;}
+    .crow{grid-template-columns:1fr;gap:4px;}
+    .sec-head .aside{text-align:left;}
+  }
+  @media print{
+    body{background:#fff;}
+    .sheet{max-width:none;padding:0 10px;}
+    .bite,.seq,section{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- MAST -->
+  <header class="mast">
+    <div class="mast-top">
+      <div>
+        <p class="kicker">Paper Edits · First Responder Initiative — postable before Rob</p>
+        <h1>Four cuts we can assemble now</h1>
+      </div>
+      <div class="brandmark">
+        <strong>Leopardo Efficiency<span class="x">×</span>The VDO Aigency</strong>
+        Assembly-ready · + 2 short spinoffs
+      </div>
+    </div>
+    <div class="srcline">Verbatim soundbites from the <b>Cleveland kickoff press conference</b>, <b>Heather Garay</b>, <b>Drake Wahlers</b>, and PMs <b>Giovanni Luciano</b> &amp; <b>Justin Jezierski</b>. Curtis's lines are from the approved CEO script (assumed recorded). <b>None of these require Rob Vollrath.</b></div>
+  </header>
+
+  <!-- CONVENTIONS -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2>How to read this &amp; what's cleared</h2>
+    </div>
+    <div class="conv">
+      <div class="crow"><div class="ck">Timecodes</div><div class="cv">The in-point to find each take in the transcript/footage. Where a speaker did multiple passes, the <b>cleanest complete take</b> is the one selected.</div></div>
+      <div class="crow"><div class="ck">[ Brackets ]</div><div class="cv">Fix speech-to-text garble of proper nouns — the transcripts mangle the company name (rendered "Leah Pardo," "Picardo," etc.). Spoken words are otherwise untouched.</div></div>
+      <div class="crow"><div class="ck">… ellipsis</div><div class="cv">Trimmed false starts and filler ("probably shouldn't say that," repeated words). Nothing added.</div></div>
+      <div class="crow"><div class="ck">Curtis lines</div><div class="cv">From the <b>approved CEO script</b> (C-numbers), assumed in the can. No timecode. Trim to the marked in-point where noted.</div></div>
+      <div class="crow"><div class="ck"><span class="tag use">Figures — use</span></div><div class="cv"><b>$21M across all five districts</b> and the <b>guarantee mechanism</b> (Ohio Revised Code 717.02 — savings cover the cost or Leopardo writes the check). Public record.</div></div>
+      <div class="crow"><div class="ck"><span class="tag hold">Figures — held</span></div><div class="cv"><b>$108,000/yr</b> and <b>"north of $7M/yr"</b> (Justin) stay out of every cut — he flagged the first on tape. None of these four need them.</div></div>
+      <div class="crow"><div class="ck"><span class="tag confirm">Guardrail</span></div><div class="cv">Harsh condition language ("deplorable," leaks, "1970s") rides on <b>city and union voices</b> — never Leopardo's own people.</div></div>
+    </div>
+  </section>
+
+  <!-- CUT 1 -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>Built by Cleveland, for Cleveland</h2>
+      <span class="aside">union labor · ~75–90s · local + labor + LinkedIn</span>
+    </div>
+    <p class="logline">The work that fixes these stations is done by Cleveland's own union trades — the project reinvests in the community it serves.</p>
+    <div class="seq">
+
+      <div class="bite struct">
+        <div class="slug broll"><span class="ord">—</span><span class="spk">Cold open · B-roll</span></div>
+        <div class="said vo"><em class="br">Union crews on site — trades working, tools, hands. No VO. Let sound breathe, then bring up the first bite.</em></div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">01</span><span class="tc">TC 00:03:36</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"Massive undertaking doing the Cleveland Police District renovations. We could not have done it without the signatory union contractors from the Cleveland Building Trades Council. They were an outstanding help, and we could not have done it without them."</div>
+        <div class="note">Cut against: wide of a district exterior, then crews inside.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">02</span><span class="tc">TC 00:01:22</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"So we had a lot of local trades involved in this project, from sheet metal to carpenters to painters to flooring guys to laborers in general. … It was really important to us to make sure that we were using … good quality union work to get this job accomplished in a timely manner and under budget."</div>
+        <div class="note">Cut against: each trade doing its work — sheet metal, paint, flooring.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">03</span><span class="tc">TC 00:02:00</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"We couldn't have done this project without the help of the unions and their great stewardship … providing us a great contracting network to work within."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">04</span><span class="tc">TC 00:02:00</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"… part of the guarantees that we make … is we create local jobs that stay local to the specific areas by hiring the unions and hiring good quality union workers for the city of Cleveland."</div>
+        <div class="note"><b>Key line.</b> This is the economic argument — local money staying local.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">05</span><span class="tc">TC 00:02:27</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"… we were able to make that commitment to the unions in the city that we would utilize good quality local union contractors and have the work done by Cleveland residents."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">06</span><span class="spk">Curtis Leopardo · C2 (tail)</span></div>
+        <div class="said">"… we start with first responders, because a police station or a firehouse is something a community can't do without. The savings is the mechanism; a better city — starting with the people who protect it — is the mission."</div>
+        <div class="inpt">In-point: start at "we start with first responders…" — lifts the piece from a jobs story to a civic-value story.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">07</span><span class="tc">TC 00:02:07</span><span class="spk">Drake Wahlers · SVP Engineering</span></div>
+        <div class="said">"We're not just another construction company coming in to repair your buildings. We are subject matter experts."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">08</span><span class="tc">TC 00:04:17</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"This is a huge step forward and a huge show of good faith that they are here to support everybody who comes into these public safety buildings. … The city is looking out for our public safety officials, and we are more than happy to be the driving arm of that."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">09</span><span class="tc">TC 00:06:00</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"It's a great opportunity for me to give back to the brave men and women that are out there serving our city. I'm a proud resident of Cleveland."</div>
+        <div class="note">Cut against: finished interior, then pull to the union crew that built it. End card.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUT 2 -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>The Seat I Sat In</h2>
+      <span class="aside">buyer-turned-believer · ~2 min · finance directors + councils</span>
+    </div>
+    <p class="logline">The person who de-risks this for a nervous finance director sat in that exact seat — and was skeptical too.</p>
+    <div class="seq">
+
+      <div class="bite struct">
+        <div class="slug broll"><span class="ord">—</span><span class="spk">Cold open</span></div>
+        <div class="said vo"><em class="br">Heather to camera, or walking a station corridor. Open cold on the skepticism.</em></div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">01</span><span class="tc">TC 00:01:02</span><span class="spk">Heather Garay · Partnership Executive</span></div>
+        <div class="said">"… many of the people I talk to have the same response I had the first time … that simply that this project was just too good to be true."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">02</span><span class="tc">TC 00:00:08</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"I met [Leopardo] when I was working as the finance director for a community in … Indiana. They came to our community and approached us with an innovative way to upgrade facilities, fleet and our entire infrastructure with cost saving[s]."</div>
+        <div class="note"><b>Establishes the arc:</b> she was the customer first.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">03</span><span class="tc">TC 00:01:17</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"I remember a time when Drake, [now] our senior VP of engineering, came to my office, and my … staff at the time encouraged me to just give him our utility bills … to organize. They were a headache for the city … [He] came back with organized spreadsheets and contacted the vendor and got us all of our accounts lined up perfectly. And that's when I really started to think these guys could help us."</div>
+        <div class="note">Cut against: spreadsheets, utility bills, a desk. The concrete proof moment.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">04</span><span class="tc">TC 00:01:41</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"I began to really believe in the solution, and the city went on to do three successful phases."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">05</span><span class="tc">TC 00:02:06</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"… when I asked to join the team at [Leopardo] … we worked together to create a spot for me where I could use my legal background and my municipal finance background to really help other communities go through this process more smoothly."</div>
+        <div class="note">The turn: customer → believer → joined.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">06</span><span class="tc">TC 00:03:38</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"… with the city of Cleveland … it was not only that this was the first time that they were going to issue debt of this nature, but really, they put their faith in us to walk them through this process and upgrade their … stations."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">07</span><span class="spk">Curtis Leopardo · C4</span></div>
+        <div class="said">"… because the work is done under an Energy Savings Performance Contract, that savings is guaranteed by state code — if it ever falls short, we cover the difference, not the city. So the money question, which is where most of these projects die, is handled."</div>
+        <div class="inpt">In-point: start at "because the work is done under…" — the de-risk answering her "faith" beat, in the CEO's voice.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">08</span><span class="spk">Curtis Leopardo · C8</span></div>
+        <div class="said">"When a city trusts the Leopardo name with a police station or a firehouse, they're trusting us with something a whole community organizes its sense of safety around. … The name means we're still standing behind that building long after the work is done."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">09</span><span class="tc">TC 00:02:28</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"I work with the customer community from the very first meeting, all the way through implementation and follow up … We're there to help navigate that process for them and really … be a support system throughout."</div>
+        <div class="note">Close on Heather with council/finance staff on a site walk. End card.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUT 3 -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>Second Home</h2>
+      <span class="aside">human / morale · ~90s · social + recruiting</span>
+    </div>
+    <p class="logline">These are the buildings where first responders spend half their lives — making them worthy changes morale and recruiting.</p>
+    <div class="seq">
+
+      <div class="bite struct">
+        <div class="slug broll"><span class="ord">—</span><span class="spk">Cold open · before-state B-roll</span></div>
+        <div class="said vo"><em class="br">Before footage — dated interiors, leaks, worn workstations — under the first union voice.</em></div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">01</span><span class="tc">Presser · TC 00:06:32</span><span class="spk">Jimmy O'Malley · FOP President</span></div>
+        <div class="said">"I've been a Cleveland policeman for almost 30 years, and I've never walked into a building that is properly acclimated, doesn't have a leak. … They're working 12 hour shifts. Half their day is spent in a police building."</div>
+        <div class="note"><b>Guardrail-safe:</b> condition language on a union voice, not Leopardo's.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">02</span><span class="tc">Presser · TC 00:05:34</span><span class="spk">Andy · Cleveland Police Patrol Assoc.</span></div>
+        <div class="said">"There's a lot of times me and Jimmy O'Malley … get phone calls late at night about the heating in the summertime and the cooling in the wintertime."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">03</span><span class="tc">TC 00:04:45</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"… when you come back to a facility where the walls are leaking, the roof … needs repairs … no updated lighting — these are signals that no one cares. And when you make these improvements, it really shows that the community is invested in improving the work environment for these individuals who play such a critical role."</div>
+      </div>
+
+      <div class="bite struct">
+        <div class="slug broll"><span class="ord">—</span><span class="spk">Turn · before → after</span></div>
+        <div class="said vo"><em class="br">Match-cut the same space renovated. The visual pivot lands here.</em></div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">04</span><span class="tc">TC 00:02:47</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"When an officer walks into the station after it's been renovated, I want them to feel like it's a second home to them. I want them to be cool in the summer, and I want them to be warm in the winter. And I also want them to have a nice looking facility …"</div>
+        <div class="note"><b>Title line.</b> "Second home."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">05</span><span class="tc">TC 00:02:15</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"What we want to see from these renovations is a wow factor. Everybody walks in and sees that this is something that the city is putting effort into. The city cares about the employees."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">06</span><span class="spk">Curtis Leopardo · C3 (tail)</span></div>
+        <div class="said">"… if that building is decades behind, we've quietly told the people who protect us that they come last. We don't believe they should."</div>
+        <div class="inpt">In-point: start at "if that building is decades behind…" — the moral center in the CEO's voice.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">07</span><span class="tc">TC 00:04:09</span><span class="spk">Heather Garay</span></div>
+        <div class="said">"… they were having challenges attracting new recruits and attaining the quality recruits … the stations were a big part of that. So by upgrading these facilities, the community was able to show that they were investing in those police officers and are now attracting more qualified individuals. … To me, that's an unmarked savings, but something that's a really big value."</div>
+        <div class="note"><b>Her signature.</b> Recruiting/retention — the value nobody else names.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">08</span><span class="tc">TC 00:04:45</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"Now officers, they're coming into work and they have a brand new interior, a very nice place to work. And I think that really lifts the morale of the officers …"</div>
+        <div class="note">Close on officers in the renovated space. Optional tag → House Jones, "public servants … treated with the dignity and respect" (Presser TC 00:11:00).</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUT 4 -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>Twenty Years From Now</h2>
+      <span class="aside">built to last · ~75–90s · skeptics + procurement</span>
+    </div>
+    <p class="logline">Not a patch job — infrastructure built to outlast the people who installed it, backed by a name that stands behind it.</p>
+    <div class="seq">
+
+      <div class="bite struct">
+        <div class="slug broll"><span class="ord">—</span><span class="spk">Cold open · B-roll</span></div>
+        <div class="said vo"><em class="br">New systems going in — HVAC units, solar arrays on the roof, new plumbing. The hardware.</em></div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">01</span><span class="tc">TC 00:03:52</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"We've got a ton of new HVAC upgrades here and solar arrays that have been installed, lots of new plumbing infrastructure upgrades. … The equipment that we installed today is going to last us 20 years. Easy — given the right amount of preventative maintenance and upkeep."</div>
+        <div class="note">Say "heating and cooling" in captions if "HVAC" reads as an abbreviation on screen.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">02</span><span class="tc">TC 00:01:29</span><span class="spk">Giovanni Luciano · PM</span></div>
+        <div class="said">"… bringing in all this new solar panels for the roof, all new solar arrays for each of the different buildings … a new roof system for district five. … Many people were very much looking forward to not having a leaky roof."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">03</span><span class="tc">TC 00:03:16</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"… 20 years from now, we feel that all of the equipment will be still in the same condition … We want to make sure that 20 years from now the air conditioning is still cooling, the heating still heating, and the walls and all the doors and all the finishes still look very similar to where we left."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">04</span><span class="tc">TC 00:04:03</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"… the equipment that we've installed will last over 20 to 30 years, and … provide them with efficient heating, cooling, lighting conditions … and a facility that they can be proud of and that they can call home."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">05</span><span class="tc">TC 00:02:35</span><span class="spk">Drake Wahlers · SVP Engineering</span></div>
+        <div class="said">"We're not only helping you fix your buildings, we're setting your buildings up for the future … [using] guaranteed savings to help pay for upgrades to set cities up for the future."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">06</span><span class="spk">Curtis Leopardo · C8 (tail)</span></div>
+        <div class="said">"The name means we're still standing behind that building long after the work is done — because my family's name is standing behind it too."</div>
+        <div class="inpt">In-point: the stewardship line lands the durability argument on the CEO.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">07</span><span class="spk">Curtis Leopardo · C9 (tail)</span></div>
+        <div class="said">"If we get that right, a lot of first responders end up in buildings worthy of what we ask of them, and a lot of cities fund things they thought they couldn't."</div>
+        <div class="note">Close on the finished systems running. End card.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPINOFF 5 -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>It's Not a Cleveland Story <span style="font-family:var(--mono);font-size:11px;color:var(--steel);font-weight:400;">· spinoff</span></h2>
+      <span class="aside">national · ~45–60s · other cities / mayors</span>
+    </div>
+    <p class="logline">Cleveland is the proof of a repeatable pattern — pointed at every other city that has the same buildings and the same problem.</p>
+    <div class="seq">
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">01</span><span class="spk">Curtis Leopardo · C5</span></div>
+        <div class="said">"Cleveland is five police stations, delivered — a twenty-one-million-dollar investment across all five districts — but it would be a mistake to hear that as a Cleveland story. … Cleveland just proved the pattern works at scale."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">02</span><span class="tc">TC 00:02:07</span><span class="spk">Drake Wahlers · SVP Engineering</span></div>
+        <div class="said">"… cities like Speedway, Indiana, South Euclid, Ohio and Cleveland, Ohio speak to our credibility in delivery and delivery of guaranteed savings."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">03</span><span class="spk">Curtis Leopardo · C6</span></div>
+        <div class="said">"… no one on a city council wants to be the person who tells first responders their building doesn't matter. … That's not a sales angle — it's just true, and it's true in every city."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">04</span><span class="spk">Curtis Leopardo · C10</span></div>
+        <div class="said">"When a city's police or fire facilities need to be updated or built new, Leopardo should be the first call … We've proven it in Cleveland and beyond."</div>
+        <div class="note">This close matches the R10/H10 line — intercuttable once Rob and Heather are on tape.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPINOFF 6 -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2>A Better City <span style="font-family:var(--mono);font-size:11px;color:var(--steel);font-weight:400;">· spinoff</span></h2>
+      <span class="aside">aperture-opener · ~30–45s · positioning test</span>
+    </div>
+    <p class="logline">The one cut that deliberately reaches past first responders — to test the wider "better city" positioning.</p>
+    <div class="seq">
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">01</span><span class="spk">Curtis Leopardo · C2</span></div>
+        <div class="said">"What we really do is unlock value a city can't see — money it's quietly losing in old systems and in the way it buys things — and turn that into savings the city can put toward a better city."</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug"><span class="ord">02</span><span class="tc">TC 00:04:38</span><span class="spk">Justin Jezierski · PM</span></div>
+        <div class="said">"… not only here in the police districts, but hopefully within all of the … fire districts, the city halls, everything that they're doing to improve the state of the city …"</div>
+        <div class="note"><b>The bridge line</b> — a Cleveland PM naming the wider aperture on tape.</div>
+      </div>
+
+      <div class="bite">
+        <div class="slug curtis"><span class="ord">03</span><span class="spk">Curtis Leopardo · C7 (tail)</span></div>
+        <div class="said">"The moment you see that, the question stops being 'can we afford this' and becomes 'why haven't we done it yet.'"</div>
+        <div class="note">End card.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Prepared by <b>The VDO Aigency</b> for Leopardo Efficiency</span>
+    <span>First Responder Initiative · four Rob-free paper edits + 2 spinoffs</span>
+  </footer>
+
+</div>
+</body>
+</html>
