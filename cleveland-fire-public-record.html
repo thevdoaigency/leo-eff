@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleveland Fire &amp; EMS — What's on the Public Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3868;
+    --yellow:#FFE600;
+    --bg:#EEF1F5;
+    --sheet:#FFFFFF;
+    --ink:#1A1F2B;
+    --sub:#5B6472;
+    --line:#DFE4EC;
+    --amber:#9A6B00;
+    --flag:#A03028;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:'Libre Franklin',sans-serif;
+    color:var(--ink);
+    line-height:1.55;
+  }
+  h1,h2,h3,.brandline,.eyebrow{font-family:'Jost',sans-serif;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+  .sheet{
+    background:var(--sheet);
+    margin:32px auto;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(26,56,104,.08);
+  }
+  header.top{
+    padding:28px 32px 24px;
+    border-bottom:4px solid var(--yellow);
+  }
+  .brandline{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin:0 0 6px;}
+  h1{font-size:32px;font-weight:600;margin:0 0 8px;color:var(--navy);}
+  .dek{color:var(--sub);font-size:15px;max-width:660px;margin:0;}
+
+  /* Bottom line strip */
+  .bottomline{padding:24px 32px;border-bottom:1px solid var(--line);}
+  .bottomline .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:0 0 4px;}
+  .bottomline h2{margin:0 0 4px;font-size:20px;color:var(--navy);}
+  .bldate{font-size:13px;color:var(--sub);margin:0 0 18px;}
+  .blgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media (max-width:700px){.blgrid{grid-template-columns:1fr;}}
+  .blcol h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px;color:var(--navy);}
+  .blcol.flagged h3{color:var(--amber);}
+  .blitem{font-size:14px;margin:0 0 10px;padding-left:14px;position:relative;color:var(--ink);}
+  .blitem::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--yellow);}
+  .blcol.flagged .blitem::before{background:var(--navy);}
+
+  /* generic sections */
+  section{padding:28px 32px;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  section h2{font-size:20px;color:var(--navy);margin:0 0 4px;}
+  section .lede{color:var(--sub);font-size:14px;margin:0 0 18px;}
+  mark{background:var(--yellow);padding:0 3px;}
+
+  /* document ledger */
+  .asset-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:700px){.asset-grid{grid-template-columns:1fr;}}
+  .asset-card{border:1px solid var(--line);padding:14px 16px;}
+  .asset-card .status{font-size:10px;letter-spacing:.06em;font-weight:700;color:var(--navy);margin:0;}
+  .asset-card .status.gone{color:var(--flag);}
+  .asset-card .status.request{color:var(--amber);}
+  .asset-card h3{font-size:15px;margin:6px 0;color:var(--navy);}
+  .asset-card p{font-size:13px;color:var(--sub);margin:0;}
+
+  /* quotes */
+  .voice{border-left:3px solid var(--yellow);padding:10px 0 10px 16px;margin-bottom:18px;}
+  .voice:last-child{margin-bottom:0;}
+  .voice blockquote{
+    margin:0 0 6px;font-family:'Jost',sans-serif;font-weight:500;
+    font-size:18px;line-height:1.35;color:var(--navy);
+  }
+  .voice .para{font-size:14px;color:var(--ink);margin:0 0 6px;}
+  .voice .attrib{font-size:12px;font-weight:600;color:var(--navy);margin:0;}
+  .voice .attrib span{font-weight:400;color:var(--sub);}
+
+  /* timeline */
+  .tl{margin:0;padding:0;list-style:none;}
+  .tl li{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:12px 0;border-top:1px solid var(--line);}
+  .tl li:last-child{border-bottom:1px solid var(--line);}
+  .tl .date{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);padding-top:2px;}
+  .tl .what{font-size:14px;color:var(--ink);}
+  .tl .what b{color:var(--navy);font-weight:600;}
+  @media (max-width:700px){.tl li{grid-template-columns:1fr;gap:4px;}}
+
+  /* flags + open items */
+  .open-item{border-left:3px solid var(--yellow);padding:10px 0 10px 16px;margin-bottom:14px;}
+  .open-item h3{font-size:15px;margin:0 0 6px;color:var(--navy);}
+  .open-item p{font-size:13px;color:var(--sub);margin:0 0 6px;}
+  .owner{font-size:12px;font-weight:600;color:var(--navy);}
+  .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.03em;padding:2px 7px;margin-right:8px;text-transform:uppercase;vertical-align:2px;}
+  .tag.hold{background:var(--yellow);color:var(--navy);}
+  .tag.decide{background:var(--navy);color:#fff;}
+
+  /* sources */
+  .sources ol{margin:0;padding-left:18px;}
+  .sources li{font-size:12.5px;color:var(--sub);line-height:1.7;margin-bottom:6px;}
+  .sources li b{color:var(--navy);font-weight:600;}
+
+  footer{padding:20px 32px;font-size:12px;color:var(--sub);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sheet">
+
+    <header class="top">
+      <p class="brandline">Leopardo Efficiency · First Responder Facilities</p>
+      <h1>Cleveland Fire &amp; EMS — What's on the Public Record</h1>
+      <p class="dek">We went looking for the finished modernization study. It isn't published. What turned up instead is a stronger paper trail: <mark>the fire work is already a named City program</mark>, and Cleveland's own procurement language ties it back to the police districts. Two things need your call before any of it goes on camera.</p>
+    </header>
+
+    <div class="bottomline">
+      <p class="eyebrow">Prepared for Rob Vollrath</p>
+      <h2>Bottom Line</h2>
+      <p class="bldate">August 20, 2026 · verify before publication</p>
+      <div class="blgrid">
+        <div class="blcol">
+          <h3>What we learned</h3>
+          <p class="blitem">The 2024 modernization study has no published deliverable — no award, no phase reports, no "Station of the Future" concepts.</p>
+          <p class="blitem">The real upstream document is the 2024 CFD Facility Condition Report, obtainable through a records request.</p>
+        </div>
+        <div class="blcol">
+          <h3>What's strong</h3>
+          <p class="blitem">Fire/EMS is already legislated: Council ordinance Sept 2025, RFQ Nov 2025, owner's rep approved Mar 2026.</p>
+          <p class="blitem">Police and Fire carry the same City program title — the continuation framing is on the record, not constructed.</p>
+        </div>
+        <div class="blcol flagged">
+          <h3>Needs your call</h3>
+          <p class="blitem">What "first reading" means on Sept 30 — legislative, or a working session on the study.</p>
+          <p class="blitem">Leopardo Energy vs. Leopardo Efficiency in public-facing copy.</p>
+        </div>
+      </div>
+    </div>
+
+    <section id="ledger">
+      <h2>Document Ledger</h2>
+      <p class="lede">What we can get, what's gone, and what needs a records request.</p>
+      <div class="asset-grid">
+
+        <div class="asset-card">
+          <p class="status gone">NOT PUBLISHED</p>
+          <h3>Modernization Plan — consultant deliverable</h3>
+          <p>Nothing in City press releases, Board of Control resolutions, Legistar, or trade press. No named consultant was ever awarded on the public record. Either the RFP wasn't awarded as scoped, or the work was absorbed into internal capital planning and never released.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status gone">URL DEAD</p>
+          <h3>The May 2024 RFP itself</h3>
+          <p>The City's hosted PDF returns a 404. Scope, phases and deliverables are still recoverable from indexed text — that's the reconstruction already on file.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status request">RECORDS REQUEST</p>
+          <h3>2024 CFD Facility Condition Report</h3>
+          <p>All 25 fire stations plus the Training Academy on Lakeside and Division headquarters on Superior. Grades roofs, HVAC, plumbing, electrical and overall infrastructure. Nearly every building rated fair or poor in nearly every category; only seven of the 27 facilities inspected rated good on roofs. Also documented that just nine firehouses have separate facilities for female firefighters. Never posted publicly.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status">ON RECORD</p>
+          <h3>December 2025 press coverage</h3>
+          <p>The most useful public artifact we have. Quotes the condition report directly: mold remediation requiring demolition of basement office space at Fire Station 1 — which is also Division headquarters — HVAC there that can only be switched on or off rather than set to a temperature, and significant HVAC needs at nearly a dozen stations plus the Training Academy.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status">ON RECORD</p>
+          <h3>City legislation &amp; Board of Control minutes</h3>
+          <p>Both the police contract authorization and the Fire/EMS enabling ordinance are public, named and citable. Sequence laid out below.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status">ON RECORD</p>
+          <h3>The $21M police proof</h3>
+          <p>Still the cleanest public number. Cited in December 2025 coverage as the model the fire work is following — which is exactly the bridge we want.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="voices">
+      <h2>Voices Already on Record</h2>
+      <p class="lede">All City, council, or union. None of this requires a Leopardo employee to describe a failing building on camera.</p>
+
+      <div class="voice">
+        <blockquote>"We don't want to put Band-Aids on the problems."</blockquote>
+        <p class="attrib">Paul Barrett <span>· Chief Financial Officer, City of Cleveland · July 2025</span></p>
+      </div>
+
+      <div class="voice">
+        <blockquote>"One administration after another has just kicked the can down the street."</blockquote>
+        <p class="attrib">Mike Polensek <span>· Cleveland City Council · December 2025</span></p>
+      </div>
+
+      <div class="voice">
+        <p class="para">Says that for the first time in his career, the commitment to fix firefighter facilities is coming from the top of the administration. Has separately described the problem as a mix of deferred maintenance and stations that are simply old and hard to retrofit.</p>
+        <p class="attrib">Jake Konys <span>· President, IAFF Local 93 · paraphrased</span></p>
+      </div>
+
+      <div class="voice">
+        <p class="para">Touring a station under repair, framed the buildings as a second home for the crews — somewhere that has to be safe, clean and efficient while they're on shift.</p>
+        <p class="attrib">Wayne Drummond <span>· Director of Public Safety · paraphrased</span></p>
+      </div>
+    </section>
+
+    <section id="paper-trail">
+      <h2>The Paper Trail</h2>
+      <p class="lede">Fire/EMS is not a hypothetical next phase. It's a named City program with dates on it.</p>
+      <ul class="tl">
+        <li><span class="date">May 2024</span><span class="what">City issues the <b>Fire and EMS Facility Modernization Plan</b> RFP through the Mayor's Office of Capital Projects. No public award follows.</span></li>
+        <li><span class="date">2024</span><span class="what"><b>CFD Facility Condition Report</b> completed. Not released publicly.</span></li>
+        <li><span class="date">Jul 2025</span><span class="what">Condition report obtained and reported by local investigative TV. City confirms a modernization plan is in progress and names its CFO as the person finding the money.</span></li>
+        <li><span class="date">Sep 29, 2025</span><span class="what">Council passes <b>Ordinance No. 846-2025</b> — the authority later cited for Fire/EMS work.</span></li>
+        <li><span class="date">Nov 2025</span><span class="what">City issues the RFQ titled <b>Public Safety Energy Improvements: Fire &amp; EMS</b>. Submissions run to mid-January 2026.</span></li>
+        <li><span class="date">Dec 2025</span><span class="what">Press frames the fire work as the same financing approach used for the <b>$21M five police district</b> project, and names Leopardo as the firm selected for that police work.</span></li>
+        <li><span class="date">Mar 25, 2026</span><span class="what">Board of Control approves <b>NV5 Consultants</b> as Owner's Representative for Public Safety Energy Improvements for Fire/EMS, not to exceed $31,999.</span></li>
+      </ul>
+      <p style="font-size:14px;margin:18px 0 0;">The naming is the finding. Police and Fire/EMS carry the <mark>same program title</mark> in City procurement: <b>Public Safety Energy Improvements</b>. On the record, the fire work reads as phase two of something Cleveland already started — not a new ask, and not a pitch we have to construct. That's firmer footing for the continuation framing than the press conference line on its own.</p>
+    </section>
+
+    <section id="flags">
+      <h2>Two Things to Settle</h2>
+      <p class="lede">Both are blocking. Neither should reach a script until it's answered.</p>
+
+      <div class="open-item">
+        <h3><span class="tag hold">Hold</span>What does "first reading" mean on Sept 30?</h3>
+        <p>Read against the record, "first reading" plus "close mid-October" sounds less like reviewing a consultant's study and more like a legislative first reading. Cleveland's ESPC path runs through a Council ordinance that names the ESCO outright — which is exactly how the police contract was authorized.</p>
+        <p>The two readings imply completely different events, different footage, different timing. If it's legislative, Sept 30 is the moment the Leopardo name lands publicly on the fire deal. That's a shoot, not a calendar note.</p>
+        <p class="owner">Owner · Rob / confirm with Curtis</p>
+      </div>
+
+      <div class="open-item">
+        <h3><span class="tag decide">Decide</span>Leopardo Energy or Leopardo Efficiency?</h3>
+        <p>Every piece of Cleveland legislation and press coverage says <b>Leopardo Energy, LLC</b>. Campaign materials say <b>Leopardo Efficiency</b>. Anyone who pulls the ordinance to verify a claim will hit that gap.</p>
+        <p>Need a decision on which name carries in public-facing copy, and whether video credits and the site reconcile the two.</p>
+        <p class="owner">Owner · Rob</p>
+      </div>
+    </section>
+
+    <section id="open">
+      <h2>Open on the Board</h2>
+      <p class="lede">The remaining pieces, each with an owner so nothing sits.</p>
+      <div class="open-item"><h3>Do you already hold the condition report?</h3><p>If Leopardo has the 2024 CFD Facility Condition Report through the City, we work from the document. If not, we file the Ohio records request ourselves this week.</p><p class="owner">Owner · Rob</p></div>
+      <div class="open-item"><h3>Clear or reject the "phase two" framing</h3><p>Police and Fire under one City program title is the strongest continuation angle available. It needs your sign-off before it appears in copy.</p><p class="owner">Owner · Rob</p></div>
+      <div class="open-item"><h3>Does NV5's role change anything we say publicly?</h3><p>They're the City's owner's representative on Fire/EMS. Worth knowing whether that affects how we describe the engagement.</p><p class="owner">Owner · Rob</p></div>
+      <div class="open-item"><h3>Condition-report details in a script — yes or no?</h3><p>The mold, HVAC and roof specifics currently reach us through press coverage, not the document. If they're going into a cut, we should be working from the report itself.</p><p class="owner">Owner · Rob + Brandon</p></div>
+    </section>
+
+    <section class="sources">
+      <h2>Sources</h2>
+      <p class="lede">Everything above traces to a public document or a published report.</p>
+      <ol>
+        <li><b>Board of Control agenda, Mar 25, 2026</b> — clevelandohio.gov, BOC agenda PDF</li>
+        <li><b>Cleveland City Council, File #723-2025</b> — police district energy conservation measures ordinance, cityofcleveland.legistar.com</li>
+        <li><b>RFQ, Public Safety Energy Improvements</b> — procurement.opengov.com/portal/clevelandoh, project 124580</li>
+        <li><b>RFQ, Public Safety Energy Improvements: Fire &amp; EMS</b> — listed via ohiobids.com, December 2025</li>
+        <li><b>WOIO 19 Investigates</b>, July 8, 2025 — cleveland19.com</li>
+        <li><b>Signal Cleveland / FireRescue1 / Gov1</b>, December 2025 — firehouse modernization and energy-savings financing</li>
+        <li><b>City of Cleveland</b> — Capital Projects programs and portfolios pages</li>
+      </ol>
+    </section>
+
+    <footer>
+      <span>Leopardo Efficiency · First Responder Facilities</span>
+      <span>Research brief · not cleared for publication</span>
+    </footer>
+  </div>
+</div>
+</body>
+</html>
