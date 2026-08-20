@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justin Bibb — Language Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3868;
+    --yellow:#FFE600;
+    --bg:#EEF1F5;
+    --sheet:#FFFFFF;
+    --ink:#1A1F2B;
+    --sub:#5B6472;
+    --line:#DFE4EC;
+    --amber:#9A6B00;
+    --flag:#A03028;
+    --green:#2E6B4F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:'Libre Franklin',sans-serif;
+    color:var(--ink);
+    line-height:1.55;
+  }
+  h1,h2,h3,.brandline,.eyebrow{font-family:'Jost',sans-serif;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+  .sheet{
+    background:var(--sheet);
+    margin:32px auto;
+    border-radius:2px;
+    box-shadow:0 1px 3px rgba(26,56,104,.08);
+  }
+  header.top{
+    padding:28px 32px 24px;
+    border-bottom:4px solid var(--yellow);
+  }
+  .brandline{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin:0 0 6px;}
+  h1{font-size:32px;font-weight:600;margin:0 0 8px;color:var(--navy);}
+  .dek{color:var(--sub);font-size:15px;max-width:660px;margin:0;}
+
+  /* Bottom line strip */
+  .bottomline{padding:24px 32px;border-bottom:1px solid var(--line);}
+  .bottomline .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:0 0 4px;}
+  .bottomline h2{margin:0 0 4px;font-size:20px;color:var(--navy);}
+  .bldate{font-size:13px;color:var(--sub);margin:0 0 18px;}
+  .blgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media (max-width:700px){.blgrid{grid-template-columns:1fr;}}
+  .blcol h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px;color:var(--navy);}
+  .blcol.flagged h3{color:var(--amber);}
+  .blitem{font-size:14px;margin:0 0 10px;padding-left:14px;position:relative;color:var(--ink);}
+  .blitem::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--yellow);}
+  .blcol.flagged .blitem::before{background:var(--navy);}
+
+  /* generic sections */
+  section{padding:28px 32px;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  section h2{font-size:20px;color:var(--navy);margin:0 0 4px;}
+  section .lede{color:var(--sub);font-size:14px;margin:0 0 18px;}
+  mark{background:var(--yellow);padding:0 3px;}
+
+  /* card grids */
+  .asset-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:700px){.asset-grid{grid-template-columns:1fr;}}
+  .asset-card{border:1px solid var(--line);padding:14px 16px;}
+  .asset-card .status{font-size:10px;letter-spacing:.06em;font-weight:700;color:var(--navy);margin:0;}
+  .asset-card .status.cleared{color:var(--green);}
+  .asset-card .status.verify{color:var(--amber);}
+  .asset-card .status.never{color:var(--flag);}
+  .asset-card h3{font-size:15px;margin:6px 0;color:var(--navy);}
+  .asset-card p{font-size:13px;color:var(--sub);margin:0;}
+  .asset-card p + p{margin-top:8px;}
+
+  /* will / won't split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);}
+  @media (max-width:700px){.split{grid-template-columns:1fr;}}
+  .split .col{padding:16px 18px;}
+  .split .col + .col{border-left:1px solid var(--line);}
+  @media (max-width:700px){.split .col + .col{border-left:none;border-top:1px solid var(--line);}}
+  .split h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 12px;}
+  .split .will h3{color:var(--navy);}
+  .split .wont h3{color:var(--flag);}
+  .split p{font-size:13.5px;margin:0 0 10px;padding-left:14px;position:relative;color:var(--ink);}
+  .split p:last-child{margin-bottom:0;}
+  .split .will p::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--yellow);}
+  .split .wont p::before{content:"";position:absolute;left:0;top:9px;width:8px;height:2px;background:var(--flag);}
+
+  /* quotes */
+  .voice{border-left:3px solid var(--yellow);padding:10px 0 10px 16px;margin-bottom:18px;}
+  .voice:last-child{margin-bottom:0;}
+  .voice blockquote{
+    margin:0 0 6px;font-family:'Jost',sans-serif;font-weight:500;
+    font-size:18px;line-height:1.35;color:var(--navy);
+  }
+  .voice .para{font-size:14px;color:var(--ink);margin:0 0 6px;}
+  .voice .attrib{font-size:12px;font-weight:600;color:var(--navy);margin:0;}
+  .voice .attrib span{font-weight:400;color:var(--sub);}
+
+  /* timeline */
+  .tl{margin:0;padding:0;list-style:none;}
+  .tl li{display:grid;grid-template-columns:118px 1fr;gap:18px;padding:12px 0;border-top:1px solid var(--line);}
+  .tl li:last-child{border-bottom:1px solid var(--line);}
+  .tl .date{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);padding-top:2px;}
+  .tl .what{font-size:14px;color:var(--ink);}
+  .tl .what b{color:var(--navy);font-weight:600;}
+  @media (max-width:700px){.tl li{grid-template-columns:1fr;gap:4px;}}
+
+  /* open items */
+  .open-item{border-left:3px solid var(--yellow);padding:10px 0 10px 16px;margin-bottom:14px;}
+  .open-item h3{font-size:15px;margin:0 0 6px;color:var(--navy);}
+  .open-item p{font-size:13px;color:var(--sub);margin:0 0 6px;}
+  .owner{font-size:12px;font-weight:600;color:var(--navy);}
+  .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.03em;padding:2px 7px;margin-right:8px;text-transform:uppercase;vertical-align:2px;}
+  .tag.hold{background:var(--yellow);color:var(--navy);}
+  .tag.decide{background:var(--navy);color:#fff;}
+
+  /* sources */
+  .sources ol{margin:0;padding-left:18px;}
+  .sources li{font-size:12.5px;color:var(--sub);line-height:1.7;margin-bottom:6px;}
+  .sources li b{color:var(--navy);font-weight:600;}
+
+  footer{padding:20px 32px;font-size:12px;color:var(--sub);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sheet">
+
+    <header class="top">
+      <p class="brandline">Leopardo Efficiency · First Responder Facilities</p>
+      <h1>Justin Bibb — What He'll Say About the Fire Stations</h1>
+      <p class="dek">A language map built from the Mayor's public record back to 2023. What he reaches for, what he avoids, and the line he's never spent. Also: the City's own October release puts <mark>$48M, 376 jobs and the 64th-project count</mark> into the public domain — several figures we've been holding are already cleared in Cleveland's voice.</p>
+    </header>
+
+    <div class="bottomline">
+      <p class="eyebrow">Prepared for Rob Vollrath</p>
+      <h2>Bottom Line</h2>
+      <p class="bldate">August 21, 2026 · sourced entirely from public statements and City releases</p>
+      <div class="blgrid">
+        <div class="blcol">
+          <h3>How he frames it</h3>
+          <p class="blitem">Everything lands under RISE. Not facilities policy, not an energy program — the next investment in a safety initiative he already owns.</p>
+          <p class="blitem">People first, buildings second. Morale, retention, recruitment. Energy comes late and rarely from his mouth.</p>
+        </div>
+        <div class="blcol flagged">
+          <h3>What he avoids</h3>
+          <p class="blitem">He has never publicly described a Cleveland firehouse as failing. That language belongs to council and the union.</p>
+          <p class="blitem">No blame for decades of deferred maintenance, and no number on fire until a deal is executed.</p>
+        </div>
+        <div class="blcol">
+          <h3>What it unlocks</h3>
+          <p class="blitem">The City published the guarantee, the job count and the project count itself — those figures are cleared.</p>
+          <p class="blitem">Cleveland's own release names the firm <b>Leopardo Energy</b>. That settles the naming question for Cleveland-facing work.</p>
+        </div>
+      </div>
+    </div>
+
+    <section id="frame">
+      <h2>The RISE Frame</h2>
+      <p class="lede">Every public-safety investment since 2023 has been announced as the newest piece of one initiative. Understand RISE and you can predict the shape of the fire announcement.</p>
+      <ul class="tl">
+        <li><span class="date">Jul 2023</span><span class="what">Launches <b>RISE</b> — Raising Investment in Safety for Everyone. Framed as a portfolio of investments, partnerships, enforcement and technology.</span></li>
+        <li><span class="date">Oct 2023</span><span class="what">Police pay increase announced as <b>"another historic investment"</b> under RISE. FOP President Jim O'Malley on the podium.</span></li>
+        <li><span class="date">Dec 2024</span><span class="what">Publishes a <b>500-day RISE results</b> report — homicide reduction, recruit numbers. He measures RISE publicly.</span></li>
+        <li><span class="date">Mar 2025</span><span class="what">Police union contract — <b>"Latest RISE Investment"</b> in the release headline itself.</span></li>
+        <li><span class="date">Aug 2025</span><span class="what">Firefighters' contract, <b>21% pay increase</b>, announced at Fire headquarters with IAFF Local 93.</span></li>
+        <li><span class="date">Oct 23, 2025</span><span class="what"><b>$21M police district modernization</b> announced with Leopardo Energy — again positioned as the latest RISE commitment.</span></li>
+        <li><span class="date">Feb 2026</span><span class="what">Second-term budget: <b>$14M public safety increase</b>, and he re-uses the police-buildings morale line to Council verbatim.</span></li>
+        <li><span class="date">May 2026</span><span class="what">Summer Safety Plan — still branded RISE, three years on.</span></li>
+      </ul>
+      <p style="font-size:14px;margin:18px 0 0;">The pattern is unbroken. A fire facility announcement will be introduced as a RISE investment, at a firehouse, with Local 93 present, and the mechanism will be described as <mark>paying for itself</mark> rather than as an energy project.</p>
+    </section>
+
+    <section id="language">
+      <h2>Language Map</h2>
+      <p class="lede">Built from four years of his own quotes. The left column is what he reaches for. The right column is what he leaves to other people.</p>
+      <div class="split">
+        <div class="col will">
+          <h3>He will say</h3>
+          <p><b>Modernize. Invest. Deserve.</b> His verbs for buildings are always forward-facing.</p>
+          <p><b>Morale, retention, recruitment.</b> The stated purpose of facility money is workforce, not infrastructure.</p>
+          <p><b>Not from new taxes.</b> The savings mechanism is his fiscal-discipline proof, especially in a tight budget year.</p>
+          <p><b>Local jobs, local trades.</b> Hiring through the building trades is a recurring beat.</p>
+          <p><b>Guardians / put their lives on the line.</b> His register for firefighters specifically.</p>
+          <p><b>The Cleveland Era.</b> Second-term framing — industrial revival, safer neighborhoods, a modern City Hall.</p>
+        </div>
+        <div class="col wont">
+          <h3>He won't say</h3>
+          <p><b>Mold, leaks, poor condition.</b> He is absent from every condition-report story. His CFO fielded it.</p>
+          <p><b>Neglect, kicked the can, years of failure.</b> That's the councilman's language and the union's, never his.</p>
+          <p><b>Energy efficiency as the headline.</b> In the police release, energy is paragraph six and not in his quote.</p>
+          <p><b>An admission of institutional fault.</b> He took full responsibility once, on a lost lead grant, and it became the story.</p>
+          <p><b>A fire number or timeline before execution.</b> He announces closed deals, not pending ones.</p>
+          <p><b>Anything conceding the capital line is short.</b> See the exposure section below.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quotes">
+      <h2>On the Record</h2>
+      <p class="lede">His own words, and the voices he lets carry the hard part.</p>
+
+      <div class="voice">
+        <blockquote>"a tangible reflection of my commitment to our Division of Police"</blockquote>
+        <p class="attrib">Mayor Justin Bibb <span>· City of Cleveland release, October 23, 2025 · on the police district modernization</span></p>
+      </div>
+
+      <div class="voice">
+        <blockquote>"I'm confident that these improvements will strengthen morale, boost retention and recruitment."</blockquote>
+        <p class="attrib">Mayor Justin Bibb <span>· to City Council, February 17, 2026 · the same line, four months later</span></p>
+      </div>
+
+      <div class="voice">
+        <blockquote>"requires seismic investments and an all-hands-on-deck approach"</blockquote>
+        <p class="attrib">Mayor Justin Bibb <span>· RISE launch, July 2023 · his scale-of-the-problem register</span></p>
+      </div>
+
+      <div class="voice">
+        <p class="para">Framed his 2026 budget as a <b>moral document</b> centered on public safety, neighborhood stability, economic development and modernizing city operations — while stressing fiscal prudence against rising costs and an uncertain federal funding picture.</p>
+        <p class="attrib">Mayor Justin Bibb <span>· budget hearings, February 2026 · paraphrased</span></p>
+      </div>
+
+      <div class="voice">
+        <p class="para">The hard condition language in the record belongs to Councilman Mike Polensek, who chairs public safety, and to IAFF Local 93. Polensek read the condition report aloud to reporters. Bibb has not been quoted on it.</p>
+        <p class="attrib">Who carries the damage <span>· council and union, not the Mayor</span></p>
+      </div>
+    </section>
+
+    <section id="unspent">
+      <h2>The Card He Hasn't Spent</h2>
+      <p class="lede">One biographical fact that changes what a firehouse podium is worth to him.</p>
+      <p style="font-size:15px;margin:0 0 12px;">Bibb's late father served as one of the first African American first responders in Cleveland Heights — a firefighter and special police officer for more than thirty years, working a fire shift, sleeping a few hours, then working a second job on patrol. It's on his own campaign biography.</p>
+      <p style="font-size:15px;margin:0;">He has never used it in a facilities announcement. He has a personal, credible, non-political reason to stand in a firehouse and talk about what the building was like for the people who lived in it. If there's a press event on the fire deal, <mark>expect that story</mark> — and plan coverage for it, because it will be the moment the room turns.</p>
+    </section>
+
+    <section id="cleared">
+      <h2>Already Cleared — by Cleveland</h2>
+      <p class="lede">The City's October 23, 2025 release put these into the public domain in the City's own voice. Anything below is quotable without further clearance.</p>
+      <div class="asset-grid">
+
+        <div class="asset-card">
+          <p class="status cleared">CLEARED · CITY PUBLISHED</p>
+          <h3>$48M guaranteed over 20 years</h3>
+          <p>The City states the guarantee and the shortfall commitment plainly: if savings fall short, Leopardo pays the difference. This is the guarantee mechanism described by the client's client.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status cleared">CLEARED · CITY PUBLISHED</p>
+          <h3>376 local jobs, trades-led</h3>
+          <p>Hiring led by the Cleveland Building &amp; Construction Trades Council, with work staying local. This is Gio and Justin's union-labor case, already public — we don't need to build it from scratch.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status cleared">CLEARED · CITY PUBLISHED</p>
+          <h3>64th nationwide, 5th in Northeast Ohio</h3>
+          <p>Named cities: Cleveland Heights, Cuyahoga Falls, South Euclid, North Olmsted. This resolves the 59-vs-64 discrepancy sitting open on the whiteboard — the City published 64.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status cleared">CLEARED · CITY PUBLISHED</p>
+          <h3>Rob quoted by name</h3>
+          <p>Rob appears in a City of Cleveland press release as Leopardo Energy's President, on the theme of strengthening the community rather than just fixing buildings. Pull exact wording from the release before it goes on screen.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status cleared">CLEARED · CITY PUBLISHED</p>
+          <h3>Scope and sequence</h3>
+          <p>Roof and window replacements starting November, then heating and cooling systems and solar. Facilities stay operational during outages; stations stay open during construction.</p>
+        </div>
+
+        <div class="asset-card">
+          <p class="status never">SETTLED</p>
+          <h3>The entity name</h3>
+          <p>The City publishes <b>Leopardo Energy</b>. For anything Cleveland-facing, match the City — a reader who pulls the release to verify a claim should find the same name.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="exposure">
+      <h2>The Exposure</h2>
+      <p class="lede">One gap in the public record that a reporter could open — and that the savings mechanism happens to answer.</p>
+      <p style="font-size:15px;margin:0 0 12px;">The 2026 capital plan carries roughly <b>$4.3 million for fire stations</b> against about $38 million for city-owned buildings overall. Set beside a condition report where nearly every firehouse rated fair or poor, that line does not close the gap and everyone involved knows it.</p>
+      <p style="font-size:15px;margin:0;">Bibb will not raise it. But if a reporter does at a fire announcement, the honest answer is the one that favors us: the capital budget was never going to cover it, which is exactly why the work is being financed against guaranteed savings instead. <mark>That's his best answer and our best positioning</mark> — worth making sure whoever briefs the podium has it ready.</p>
+    </section>
+
+    <section id="open">
+      <h2>Open on the Board</h2>
+      <p class="lede">What this dossier changes, and what still needs your call.</p>
+
+      <div class="open-item">
+        <h3><span class="tag decide">Decide</span>Update the figures-clearance table</h3>
+        <p>$48M/20yr, 376 jobs, 64 projects and the five NE Ohio cities move from held to cleared, sourced to the City's own release. Confirm you're comfortable citing them that way.</p>
+        <p class="owner">Owner · Rob</p>
+      </div>
+
+      <div class="open-item">
+        <h3><span class="tag hold">Hold</span>Fire leadership is unconfirmed</h3>
+        <p>Fire Chief Anthony Luke was placed on paid administrative leave in September 2025 over a social media post. We have not confirmed the outcome. No script should name a fire chief until we do.</p>
+        <p class="owner">Owner · Brandon to verify</p>
+      </div>
+
+      <div class="open-item">
+        <h3>Is there a press event on the fire deal?</h3><p>If Cleveland runs the same play it ran in October, there's a podium, a firehouse, Local 93, and Rob quoted in the release. That's a shoot we should be staffed for, not one we cover after the fact.</p><p class="owner">Owner · Rob / Curtis</p>
+      </div>
+
+      <div class="open-item">
+        <h3>Do we align our language to his?</h3><p>His frame is morale, retention and recruitment. Ours is first-responder facility outcomes. They're compatible — the question is whether we deliberately echo the City's phrasing in Cleveland materials so the coverage stacks.</p><p class="owner">Owner · Rob + Brandon</p>
+      </div>
+    </section>
+
+    <section class="sources">
+      <h2>Sources</h2>
+      <p class="lede">All public. Nothing here comes from a private conversation or an internal document.</p>
+      <ol>
+        <li><b>City of Cleveland</b> — $21 Million Investment to Modernize Police District Buildings, October 23, 2025, clevelandohio.gov/news</li>
+        <li><b>City of Cleveland</b> — RISE Initiative launch and program page, July 2023</li>
+        <li><b>City of Cleveland</b> — Bibb and Firefighters Union Announce New Agreement, 21% Pay Increase, August 4, 2025</li>
+        <li><b>City of Cleveland</b> — RISE Gets Results, 500 Days, December 12, 2024</li>
+        <li><b>Ideastream Public Media</b> — 2026 budget presentation coverage, February 17, 2026</li>
+        <li><b>Signal Cleveland</b> — budget hearings and 2026 capital plan coverage, February–March 2026</li>
+        <li><b>Firehouse.com / WOIO 19 Investigates</b> — fire station condition report coverage, July 2025</li>
+        <li><b>bibbforcle.com</b> — candidate biography</li>
+        <li><b>News 5 Cleveland</b> — fire chief administrative leave, September 2025</li>
+      </ol>
+    </section>
+
+    <footer>
+      <span>Leopardo Efficiency · First Responder Facilities</span>
+      <span>Research brief · not cleared for publication</span>
+    </footer>
+  </div>
+</div>
+</body>
+</html>
