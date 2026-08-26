@@ -18,30 +18,15 @@
     --line:#DFE4EC;
   }
   *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    font-family:'Libre Franklin',sans-serif;
-    color:var(--ink);
-    line-height:1.55;
-  }
+  body{margin:0;background:var(--bg);font-family:'Libre Franklin',sans-serif;color:var(--ink);line-height:1.55;}
   h1,h2,h3,.brandline,.eyebrow{font-family:'Jost',sans-serif;}
   .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
-  .sheet{
-    background:var(--sheet);
-    margin:32px auto;
-    border-radius:2px;
-    box-shadow:0 1px 3px rgba(26,56,104,.08);
-  }
-  header.top{
-    padding:28px 32px 24px;
-    border-bottom:4px solid var(--yellow);
-  }
+  .sheet{background:var(--sheet);margin:32px auto;border-radius:2px;box-shadow:0 1px 3px rgba(26,56,104,.08);}
+  header.top{padding:28px 32px 24px;border-bottom:4px solid var(--yellow);}
   .brandline{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin:0 0 6px;}
   h1{font-size:32px;font-weight:600;margin:0 0 8px;color:var(--navy);}
   .dek{color:var(--sub);font-size:15px;max-width:640px;}
 
-  /* This Week strip */
   .thisweek{padding:24px 32px;border-bottom:1px solid var(--line);}
   .thisweek .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:0 0 4px;}
   .thisweek h2{margin:0 0 4px;font-size:20px;color:var(--navy);}
@@ -55,7 +40,6 @@
   .weekcol.waiting .weekitem::before{background:var(--navy);}
   .weekitem .who{color:var(--sub);font-size:12px;}
 
-  /* generic sections */
   section{padding:28px 32px;border-bottom:1px solid var(--line);}
   section:last-of-type{border-bottom:none;}
   section h2{font-size:20px;color:var(--navy);margin:0 0 4px;}
@@ -83,6 +67,17 @@
   .open-item h3{font-size:15px;margin:0 0 4px;}
   .open-item p{font-size:13px;color:var(--sub);margin:0 0 4px;}
   .owner{font-size:12px;font-weight:600;color:var(--navy);}
+
+  /* approve + notes */
+  .approve-block{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);}
+  .approve-toggle{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;user-select:none;margin-bottom:8px;}
+  .approve-toggle input{width:15px;height:15px;accent-color:var(--navy);cursor:pointer;}
+  .approve-block.is-approved{background:#F4FBF7;margin:12px -16px -14px;padding:10px 16px 14px;border-top:1px solid var(--line);}
+  .approve-block.is-approved .approve-toggle{color:#0F7A45;}
+  .approve-notes{width:100%;font-family:'Libre Franklin',sans-serif;font-size:12.5px;color:var(--ink);border:1px solid var(--line);padding:6px 8px;resize:vertical;min-height:36px;background:#fff;}
+  .approve-notes::placeholder{color:#9AA3B0;}
+  .approve-saved{font-size:10px;color:var(--sub);opacity:0;transition:opacity .3s;margin-top:4px;display:block;}
+  .approve-saved.show{opacity:1;}
 
   footer{padding:20px 32px;font-size:12px;color:var(--sub);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 </style>
@@ -124,18 +119,31 @@
 
     <section id="artifacts-live">
       <h2>In This Report — Live Artifacts</h2>
-      <p class="lede">Everything currently in motion on Rob's lane, one click away.</p>
+      <p class="lede">Everything currently in motion on Rob's lane, one click away. Check off anything that's approved and drop a note — it saves automatically.</p>
       <div class="asset-grid">
+
         <div class="asset-card">
           <p class="status">GUIDE · SHOOT PREP</p>
           <h3><a href="cleveland-interview-guide-rob-heather.html" target="_blank" rel="noopener" style="color:var(--navy);">Interview guide — Rob &amp; Heather</a></h3>
           <p>Two sit-downs. Rob carries the authority and the guarantee; Heather carries the buyer's-eye trust. Both tie the fire station to the promise already made in public.</p>
+          <div class="approve-block" data-item-id="guide-rob-heather">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">GUIDE · SHOOT PREP</p>
           <h3><a href="interview-guide-curtis-leopardo.html" target="_blank" rel="noopener" style="color:var(--navy);">Interview guide — Curtis Leopardo</a></h3>
           <p>The CEO sit-down. Mission layer above Rob's authority and Heather's trust — why this scales into a national pattern, and why the Leopardo name is on it.</p>
+          <div class="approve-block" data-item-id="guide-curtis">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">MOCKUP · IN REVIEW</p>
           <h3 style="color:var(--navy);">Website mockups</h3>
@@ -145,12 +153,24 @@
             &nbsp;·&nbsp;
             <a href="cleveland-case-study-page.html" target="_blank" rel="noopener" style="color:var(--navy);font-size:13px;font-weight:600;">Cleveland case study ↗</a>
           </p>
+          <div class="approve-block" data-item-id="website-mockups">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">BOARD · WORKING</p>
           <h3><a href="scout-rob-review.html" target="_blank" rel="noopener" style="color:var(--navy);">Scout</a></h3>
           <p>Always-on agent hunting failed bonds, budget distress, and aging stations across OH, IN, and FL — logs qualified opportunities to Rob's Monday board before they become a competitive bid. First run: 7 qualified, 3 triggers.</p>
+          <div class="approve-block" data-item-id="scout">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">TOOL · IN DEVELOPMENT</p>
           <h3 style="color:var(--navy);">Gator</h3>
@@ -161,22 +181,46 @@
             <a href="https://thevdoaigency.github.io/gator/dark_mode.html" target="_blank" rel="noopener" style="color:var(--navy);font-size:13px;font-weight:600;">Dark mode ↗</a>
           </p>
           <p style="margin-top:10px;font-size:11px;color:var(--sub);">First cut — Brandon</p>
+          <div class="approve-block" data-item-id="gator">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">REEL · DELIVERED</p>
           <h3><a href="https://drive.google.com/file/d/1LhhrqlTDQ0lRZsE-9o3r7TyB5bbFvY0h/view?usp=sharing" target="_blank" rel="noopener" style="color:var(--navy);">Gio &amp; Justin on camera</a></h3>
           <p>Both PMs, ready to mobilize on the fire stations — the union-labor case, the equipment-longevity case, already in their own words.</p>
+          <div class="approve-block" data-item-id="gio-justin-reel">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">PAGE · 3 LIVE, 1 HELD</p>
           <h3><a href="rob_vollrath_launch_posts.html" target="_blank" rel="noopener" style="color:var(--navy);">Rob's launch posts</a></h3>
           <p>The four posts that open his page — Category, Proof, Stakes, and Fire Stations. Post 4 is written and approved, held for the council vote.</p>
+          <div class="approve-block" data-item-id="launch-posts">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
         <div class="asset-card">
           <p class="status">TOOL · GATED</p>
           <h3><a href="https://bridge.thevdoaigency.com/awc-bridge" target="_blank" rel="noopener" style="color:var(--navy);">AWC Bridge</a></h3>
           <p>Password-protected. Rob's email is on the access list.</p>
+          <div class="approve-block" data-item-id="awc-bridge">
+            <label class="approve-toggle"><input type="checkbox" class="approve-check"> Approved</label>
+            <textarea class="approve-notes" rows="2" placeholder="Notes for Brandon…"></textarea>
+            <span class="approve-saved">Saved</span>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -256,7 +300,6 @@
 </div>
 
 <script>
-  // Date for the "This Week" strip
   (function(){
     var d = new Date();
     var day = d.getDay();
@@ -266,7 +309,75 @@
     document.getElementById('weekdate').textContent = 'Week of ' + monday.toLocaleDateString('en-US', opts);
   })();
 
-  // Live repo activity feed via GitHub API — removed (see chat: unreliable on shared networks, superseded by curated Live Artifacts section)
+  // ---- Approve + Notes, synced via Cloudflare Worker → R2 ----
+  // FILL THESE IN once the Worker is deployed:
+  var WORKER_URL = "https://REPLACE-WITH-YOUR-WORKER-URL.workers.dev";
+  var WRITE_KEY  = "BjY.Lk9NQid_.c8";
+  // Note: this key lives in the page source, so it's a soft lock against
+  // random internet traffic hitting the endpoint — not a real secret.
+  // Fine for this use case; don't reuse it anywhere sensitive.
+
+  (function(){
+    var blocks = document.querySelectorAll('.approve-block');
+
+    function applyState(block, state){
+      var check = block.querySelector('.approve-check');
+      var notes = block.querySelector('.approve-notes');
+      if(state){
+        check.checked = !!state.approved;
+        notes.value = state.notes || '';
+      }
+      block.classList.toggle('is-approved', check.checked);
+    }
+
+    function flashSaved(block){
+      var saved = block.querySelector('.approve-saved');
+      saved.classList.add('show');
+      clearTimeout(block._savedTimer);
+      block._savedTimer = setTimeout(function(){ saved.classList.remove('show'); }, 1500);
+    }
+
+    function post(itemId, approved, notes, block){
+      fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Whiteboard-Key': WRITE_KEY },
+        body: JSON.stringify({ itemId: itemId, approved: approved, notes: notes })
+      }).then(function(r){
+        if(r.ok) flashSaved(block);
+      }).catch(function(){ /* offline or worker not configured yet — fail quietly */ });
+    }
+
+    // Load current state
+    fetch(WORKER_URL)
+      .then(function(r){ return r.ok ? r.json() : {}; })
+      .then(function(data){
+        blocks.forEach(function(block){
+          var id = block.getAttribute('data-item-id');
+          applyState(block, data[id]);
+        });
+      })
+      .catch(function(){ /* worker not reachable yet — page still works, just unsynced */ });
+
+    // Wire up interactions
+    blocks.forEach(function(block){
+      var id = block.getAttribute('data-item-id');
+      var check = block.querySelector('.approve-check');
+      var notes = block.querySelector('.approve-notes');
+      var notesTimer;
+
+      check.addEventListener('change', function(){
+        block.classList.toggle('is-approved', check.checked);
+        post(id, check.checked, notes.value, block);
+      });
+
+      notes.addEventListener('input', function(){
+        clearTimeout(notesTimer);
+        notesTimer = setTimeout(function(){
+          post(id, check.checked, notes.value, block);
+        }, 800); // debounce so it's not posting on every keystroke
+      });
+    });
+  })();
 </script>
 </body>
 </html>
